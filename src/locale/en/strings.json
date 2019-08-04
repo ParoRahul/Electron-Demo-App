@@ -11,6 +11,11 @@
     "init_page_loading": "Loading",
     "copy_right_text": " CopyRight : Not available till now",
 
+    "init_page_db_start":"Starting Databse ",
+    "init_page_db_connect":"Connecting with Databse ",
+    "init_page_db_connect_fail":"Connecting with Databse ",
+    "init_page_db_connect_done":"Databse connection establish sucessfully",
+
     "menu_file": "Projects",
     "menu_file_new": "New Project...",
     "menu_file_import": "Import From File...",

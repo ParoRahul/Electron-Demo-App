@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="{{platform}}">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="../common/css/dialog.css">
+    </head>
+    <body id="dialog-confirm">
+        <header class="dialog-header">
+            <div class="title">{{locales.main_confirm_title}}</div>
+            <ul class="nav-window" id="nav-window">
+                <li class="btn-transition btn-exit"><i class="icofont-close icofont-lg"></i></li>
+            </ul>
+        </header>
+        <div class="content-wrapper">
+            <p class="confirm-text"></p>
+        </div>
+        <footer class="dialog-footer">
+            <a class="btn btn-primary" id="btn-ok">{{locales.main_confirm_ok}}</a>
+            <a class="btn btn-primary" id="btn-cancel">{{locales.main_confirm_cancel}}</a>
+        </footer>
+        <script>window.$ = window.jQuery =  require("jquery");</script>
+        <script>window.interpreter = new(require('../../locale/interpreter.js'));</script>
+        <script src='../../rendererProcess.js'></script>
+        <script src="./confirm.js"></script>
+    </body>
+</html>

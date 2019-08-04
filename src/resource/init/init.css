@@ -1,4 +1,4 @@
-@import url("../css/icofont/icofont.css");
+@import url("../common/icofont/icofont.css");
 
 html, body{
     height:350px;
@@ -34,7 +34,7 @@ html, body{
     padding: 10px 0 0 0 ;
 }
 
-.content-wrapper .msg{
+.content-wrapper .message{
     width: 100%;
     height: 30px; 
     padding: 10px 0 0 0 ;

@@ -4,7 +4,10 @@
   "description": "Small scale accounting software for sales and parches management",
   "main": "src/index.js",
   "scripts": {
-    "start": " electron ."
+    "preinstall":"",
+    "prestart":"start mongod --config=./dbConfig.cfg",
+    "start": " electron .",
+    "poststop": "stop mongod --shutdown"
   },
   "keywords": [],
   "author": "Rahul",
@@ -13,6 +16,7 @@
     "mocha": "^6.1.4"
   },
   "dependencies": {
+    "commander": "^2.20.0",
     "electron": "^6.0.0",
     "jquery": "^3.4.1",
     "mongodb": "^3.3.0-beta2",

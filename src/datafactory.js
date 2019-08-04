@@ -1,20 +1,18 @@
-const Datastore = require('nedb-promises');
-const configs = require('../../config/config.js');
+const mongodb = require('mongodb');
 
-const dbFactory = (fileName) => Datastore.create({
-  filename: fileName, 
-  timestampData: true,
-  autoload: true
+let config = {};
+config.db = {};
+config.db.host = 'localhost:27017';
+config.db.name = 'account';
+module.exports = config;
+
+const mongoUri = `mongodb://${config.db.host}/${config.db.name}`;
+const mongoClient = mongodb.MongoClient;
+
+mongoClient.connect(mongoUri)
+.then((db) => {
+ 
 })
+.catch((err) => {
 
-const db = {
-    projectDB: dbFactory(configs.DBPath)
-}
-
-db.projectDB.ensureIndex({ fieldName:'id',unique:true});
-db.projectDB.on('__error__', (datastore, event, error, ...args) => {
-    // for example
-    // datastore, 'find', error, [{ foo: 'bar' }, {}]
-})
-
-module.exports = db;
+});

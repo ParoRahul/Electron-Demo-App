@@ -121,7 +121,7 @@ class mainProcess{
     parseUrl(url){
         let matches =/[\/\\]([^\/\\]+)[\\\/]([^\\\/?]+)(\?[^\/\\]+)?$/.exec(url);
         if(matches){
-            let controller = matches[1];
+            let scheduler_name = matches[1];
             let action = matches[2];
             let query = {};
             if(matches.length == 4 && typeof matches[3] != "undefined"){
@@ -134,7 +134,7 @@ class mainProcess{
                     }
                 }
             }
-            return {"controller_name":controller,"action_name":action, "query":query};
+            return {"scheduler_name":scheduler_name,"action_name":action, "query":query};
         }
         return {};
     }
@@ -149,7 +149,7 @@ class mainProcess{
                 window = window_main;
             }
         }
-        //console.log( 'controller.tpl_path: '+controller.base_path+' Action : '+action_name);
+        console.log( 'scheduler.base_path: '+scheduler.base_path+' Action : '+action_name);
         let openWindow = ()=>{
             let html = 'data:text/html;charset=UTF-8,'+
                 encodeURIComponent("<script>window.name='"+window.display_name+"';</script>\n"+scheduler.output);
@@ -158,8 +158,7 @@ class mainProcess{
                 baseURLForDataURL:url.format({
                     pathname: scheduler.html_path,
                     protocol: 'file:',
-                    slashes: true
-                })
+                    slashes: true })
             });
             if(configs.debug){
                if (configs.debugWindow == 'ALL'){  
@@ -184,7 +183,7 @@ class mainProcess{
     }
 
     callScheduler(scheduler_name, action_name, data={}, type="get"){
-        let schedulerCls = require(path.join(__dirname,'scheduler',scheduler_name+"Scheduler.js"));
+        let schedulerCls = require(path.join(__dirname,"resource",scheduler_name,"scheduler.js"));
         //console.log(scheduler_name);
         let scheduler = new schedulerCls(scheduler_name);
         scheduler._interpreter = interpreter;
@@ -226,9 +225,10 @@ class mainProcess{
                 }else if(features.modal == true){
                     features["parent"] = parent_window;
                 }
-                let {default_scheduler, action_name, query} = this.parseUrl(url);
+                let {scheduler_name, action_name, query} = this.parseUrl(url);
                 //console.log(controller_name, action_name);
-                this.windowScheduler(default_scheduler,action_name,query,this.createWindow(features,name,parent_window));
+                this.windowScheduler(scheduler_name,action_name,query,
+                    this.createWindow(features,name,parent_window));
             }else{
                 currWin.show();
             }

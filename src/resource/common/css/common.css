@@ -1,0 +1,334 @@
+@import url("../../lib/jquery-toast/jquery-toast.css");
+@import url("../icofont/icofont.css");
+
+:root {
+    --c-primary:#347c7c;
+    --c-primary-light:#347c70;
+    --bg-primary:#111010;
+    --bg-second:#363636;
+    --tool-bar:#2f3033;
+    --tool-bar-hover:#2f3011;
+    --text:#c2c2c2;
+    --text-hover:#fff;
+    --danger:#ce5656;
+    --balck:#000;
+
+}   
+
+*{
+    margin:0;
+    padding:0;
+}
+
+*::-webkit-scrollbar
+{
+    -webkit-appearance: none;
+    width: 10px;
+    background-color: var(--tool-bar);
+}
+
+*::-webkit-scrollbar-track
+{
+    background-color: var(--tool-bar);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--balck);
+}
+
+html, body{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    height:100%;
+    width: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    color:var(--main-color);
+    margin: 0;
+}
+
+#nav-window { 
+    right: 0;
+    -webkit-app-region: no-drag;
+    line-height: 30px;
+    user-select: none;
+}
+
+#nav-window  > li {
+    cursor: pointer;
+    display: inline-block;
+}
+
+#nav-window  > li > i {
+    line-height: 30px;   
+}
+
+#nav-window > .btn-exit:hover {
+    background-color: var(--danger);
+}
+
+ol, ul {
+    list-style: none;
+}
+
+input,textarea,select {
+    outline:none;
+    border:none;
+}
+
+b,strong {
+    font-weight: 400;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+::-webkit-input-placeholder {
+    color:#999;
+    font-size: 13px;
+}
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
+.underline {
+    text-decoration: underline;
+}
+.inline-block {
+    display: inline-block;
+}
+.text-gray a {
+    color: #d2d6de !important;
+}
+
+.text-gray a:hover {
+    color: #428bca !important;
+}
+
+a.text-gray {
+    color: #666666 !important;
+}
+a.text-gray:hover {
+    color: #333333 !important;
+    cursor: pointer;
+}
+a.text-gray:active{
+    color: #333333 !important;
+}
+a.text-gray:focus {
+    color: #666666 !important;
+}
+.text-danger {
+    color: #e83f3f !important;
+}
+.text-success {
+    color: #3f9fe8 !important;
+}
+.text-warning {
+    color: #3f9fe8 !important;
+}
+/* a i {
+    margin-right: 5px;
+    position: relative;
+} */
+
+.text-link {
+    color: #1ec1ec;
+}
+.text-link:hover {
+    color: #2590ec;
+    cursor: pointer;
+}
+.text-link:active,
+.text-link:active:focus{
+    color: #0c77d3;
+}
+.text-link:focus{
+    color: #24e8ff;
+}
+.text-link.underline {
+    text-decoration: underline;
+}
+
+.btn {
+    padding:0px 10px;
+    text-align: center;
+    border-radius:3px;
+    box-shadow: none;
+    -webkit-app-region: no-drag;
+}
+.btn.active{
+    box-shadow: none;
+}
+
+.btn-primary{
+    color: #fff;
+    border: 1px solid var(--c-primary);
+    background-color: var(--c-primary);
+    transition: all .4s;
+}
+
+.btn-primary:hover{
+    border:1px solid var(--c-primary-light);
+    background-color: var(--c-primary-light);
+}
+
+.btn-primary:active{
+    border:1px solid #0c77d3 !important;
+    background-color:#0c77d3 !important;
+}
+
+.btn-default{
+    color: #fff;
+    
+    border: 1px solid var(--c-primary-light);
+    background-color: var(--c-primary-light);
+    transition: all .4s;
+}
+
+.btn-default :hover{
+    border:1px solid var(--c-primary);
+    background-color: var(--c-primary);
+}
+
+.btn-default:active{
+    border:1px solid #0c77d3 !important;
+    background-color:#0c77d3 !important;
+}
+
+/*form*/
+.form-control{
+    border-radius: 0;
+    box-shadow: none;
+}
+.help-block{
+    margin: 0;
+    padding: 3px 3px 0 3px;
+    height: 15px;
+    opacity: 0;
+}
+.help-block .fs{
+    font-size: 12px;
+}
+.form-group.has-success .checkon{
+    display: inline-block;
+    margin-left: 10px;
+}
+.has-error input[type="text"],
+.has-error input[type="password"],
+.has-error input[type="email"],
+.has-error .select2-selection,
+.has-error textarea
+{
+    border-color: #e83f3f !important;
+}
+.has-error .help-block,
+.has-warning .help-block,
+.has-success .help-block{
+    opacity: 1;
+}
+
+.has-error .help-block{
+    color: #dd4b39;
+    line-height: 12px;
+    font-size: 12px;
+}
+.has-error .help-block:before{
+    font-family: "iconfont" !important;
+    content: "\e775";
+    margin-right: 5px;
+    position: relative;
+    top: 1px;
+    font-style: normal;
+    text-rendering: auto;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+}
+.form-group.has-error > label a i{
+    display: none;
+}
+.has-success .help-block{
+    color: #090;
+}
+.has-warning .help-block{
+    color: #f68300;
+}
+.form-group h5{
+    margin: 0;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 200;
+    display: inline-block;
+}
+.form-group h5>small{
+    color: #999999;
+    margin-left: 5px;
+}
+.form-group h5 > small > i{
+    margin-right: 5px;
+}
+.form-group[required]:before{
+    font-family: "iconfont" !important;
+    font-size: 20px;
+    font-style: normal;
+    content: "\e700";
+    position: absolute;
+    margin-left: -20px;
+    color: #e83f3f;
+    margin-top: -9px;
+}
+.has-success .help-block[for=error]{
+    display: block;
+}
+.has-warning .help-block[for=error]{
+    display: block;
+}
+
+.btn-transition{
+    transition: color , background-color;
+    transition-timing-function: ease-out;
+    transition-duration: .2s;
+}
+.btn-loading{
+    pointer-events: none;
+    background-color: gray;
+    border: 1px solid gainsboro;
+}
+
+.icheckbox.checked i,
+.iradio.checked i{
+    color: #117cd8;
+}
+.icheckbox.hover i,
+.iradio.hover i{
+    color: #117cd8;
+}
+.icheckbox.active i,
+.iradio.active i{
+    color: #117cd8;
+}
+.icheckbox, .iradio{
+    vertical-align: text-top;
+}
+
+html.en .en-hide{
+    display: none !important;
+}
+html.en .en-show{
+    display: block !important;
+}
+html.en .en-hide{
+    display: none !important;
+}
+html.en .en-show{
+    display: block !important;
+}
