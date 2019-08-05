@@ -13,7 +13,7 @@
 
     "init_page_db_start":"Starting Databse ",
     "init_page_db_connect":"Connecting with Databse ",
-    "init_page_db_connect_fail":"Connecting with Databse ",
+    "init_page_db_connect_fail":"Databse connection failed",
     "init_page_db_connect_done":"Databse connection establish sucessfully",
 
     "menu_file": "Projects",

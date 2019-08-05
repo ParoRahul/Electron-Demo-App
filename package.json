@@ -7,7 +7,7 @@
     "preinstall":"",
     "prestart":"start mongod --config=./dbConfig.cfg",
     "start": " electron .",
-    "poststop": "stop mongod --shutdown"
+    "poststop": "stop mongo --eval db.getSiblingDB('admin').shutdownServer() "
   },
   "keywords": [],
   "author": "Rahul",

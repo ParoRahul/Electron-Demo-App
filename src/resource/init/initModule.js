@@ -22,12 +22,12 @@ $(function(){
     var manifests={};
     let path_loaded = 0;
     var data = {"project_list":[]};
-    const url = 'mongodb://localhost:27017'
+    const url = 'mongodb://localhost:2001'
     $(".message").html(interpreter.__("init_page_dbserver_connect"))
     mongo.connect(url, (err, client) => {
         if (err) {
           $(".message").html(interpreter.__("init_page_db_connect_fail"))
-          console.error(err)
+          console.error(err)  
           return
         }
         $(".message").html(interpreter.__("init_page_db_connect_done"))
