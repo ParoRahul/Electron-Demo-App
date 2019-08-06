@@ -7,11 +7,27 @@
  */
 
 const path = require('path')
+const db = {
+    'dbpath'            : path.join(__dirname,"..","db"),
+    'hostIp'            : 'localhost',
+    'port'              : 2001,
+    'dbname'            : 'grootdb',
+    'userid'            : 'grootuser',
+    'password'          : 'grootpassword',
+}
+
+const serveroptions={
+    useNewUrlParser: true ,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 1000,
+}
+
 module.exports = {
-    'basePath'          : path.join(__dirname,".."),
-    'DBPath'            : path.join(__dirname,"..","db","Project_collection.json"),
+    'basePath'          : path.join(__dirname,".."),    
     'defaultController' : 'init',
     'defaultLanguage'   : 'en',
     'debug'             : true,
-    'debugWindow'       : 'ALL'
+    'debugWindow'       : 'ALL',
+    'db'                : db,
+    'serveroptions'     : serveroptions
 }
