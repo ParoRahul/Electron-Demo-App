@@ -4,8 +4,8 @@
   "description": "Small scale accounting software for sales and parches management",
   "main": "src/index.js",
   "scripts": {
-    "preinstall":"",
-    "prestart":"start mongod --config=./dbConfig.cfg",
+    "preinstall": "",
+    "prestart": "start mongod --config=./dbConfig.cfg",
     "start": " electron .",
     "poststop": "stop mongo --eval db.getSiblingDB('admin').shutdownServer() "
   },
