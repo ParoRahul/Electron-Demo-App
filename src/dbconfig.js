@@ -22,10 +22,47 @@ const serveroptions={
     reconnectInterval: 1000,
 }
 
-const collections=['appUser','itemMaster','comapanyMaster']
+const collections=['appUser','itemMaster','comapanyMaster','ledgerMaster']
+
+const appUser={
+    autoIndexId:true,
+    validator: {
+        $jsonSchema: {
+           bsonType: "object",
+           required: [ "name"],
+           properties: {
+                name: {
+                $type: "string",
+                description: "must be a string and is required"
+              }
+            }
+        }
+    },
+    validationLevel:"strict",
+    validationAction:"error"
+}
+
+const itemMaster={
+    autoIndexId:true,
+    validator: {
+        $jsonSchema: {
+           bsonType: "object",
+           required: [ "name"],
+           properties: {
+                name: {
+                $type: "string",
+                description: "must be a string and is required"
+              }
+            }
+        }
+    },
+    validationLevel:"strict",
+    validationAction:"error"
+}
 
 module.exports = {
     'db'                : db,
     'serveroptions'     : serveroptions,
-    'collections'       : collections
+    'collections'       : collections,
+    'appUser'           : appUser
 }

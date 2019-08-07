@@ -30,11 +30,20 @@ $(function(){
     .then(function(db){
         $(".message").html(interpreter.__("init_page_db_connect_done"));
         console.log('connection Establish ');
-        var dbase = db.db(dbInfo.dbname);            
+        var dbase = db.db(dbInfo.dbname);
+        dbase.getCollectionNames().then((colNames)=>{
+            colNames.forEach((collname) => {
+                console.log(`verifying collections name ${collname}`);
+                $(".message").html(`verifying collections name ${collname}`);
+            });
+        }).catch((err)=>{
+            $(".message").html(err);
+            console.error(err);
+            db.close();
+        });
     }).catch((err)=>{
-            $(".message").html(interpreter.__("init_page_db_connect_fail"));
+            $(".message").html(err);
             console.error(err);
     }).finally(()=>{
-        dbase.close();
     });
 })
