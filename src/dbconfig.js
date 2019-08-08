@@ -22,7 +22,8 @@ const serveroptions={
     reconnectInterval: 1000,
 }
 
-const collections=['appUser','itemMaster','comapanyMaster','ledgerMaster']
+const collList=['itemMaster','comapanyMaster','ledgerMaster']
+const collections=['appUser']
 
 const appUser={
     autoIndexId:true,

@@ -16,6 +16,26 @@ $(function(){
     if ( !rendererObj.is("init-page")){
         return;
     }
+    var initilizeAPP = function() {
+        setTimeout(function(){
+                rendererObj.openUrl(rendererObj.url("Load","main"),"Main-Window",{
+                    width: 1460,
+                    height: 800,
+                    minWidth: 800,
+                    minHeight: 700,
+                    modal: false,
+                    frame: false,
+                    parent: null,
+                    resizable: true,
+                    useContentSize: true,
+                    webPreferences: {
+                        nodeIntegration: true,
+                    }  
+                })
+                rendererObj.close();
+            },3000)
+    }    
+
     $(".message").html(interpreter.__("init_page_db_start"))
     var ModulePaths = [path.join(__dirname,"..","..","plugin")];
     var manifests={};
@@ -26,21 +46,12 @@ $(function(){
     const dbInfo=new database()
     console.log(`mongodb://${dbInfo.hostip}:${dbInfo.port}`);
 
-    MongoClient.connect(`mongodb://${dbInfo.hostip}:${dbInfo.port}`,dbInfo.serveroptions)
+    MongoClient.connect(`mongodb://${dbInfo.hostip}:${dbInfo.port}/admin`,dbInfo.serveroptions)
     .then(function(db){
         $(".message").html(interpreter.__("init_page_db_connect_done"));
         console.log('connection Establish ');
-        var dbase = db.db(dbInfo.dbname);
-        dbase.getCollectionNames().then((colNames)=>{
-            colNames.forEach((collname) => {
-                console.log(`verifying collections name ${collname}`);
-                $(".message").html(`verifying collections name ${collname}`);
-            });
-        }).catch((err)=>{
-            $(".message").html(err);
-            console.error(err);
-            db.close();
-        });
+        initilizeAPP();
+        db.close();
     }).catch((err)=>{
             $(".message").html(err);
             console.error(err);

@@ -10,8 +10,8 @@ const path = require('path');
 const baseScheduler = require(path.join(__dirname,"..","common","scheduler.js"));
 
 class mainScheduler extends baseScheduler{
-    actionIndex(){
-        this.render("main");
+    actionLoad(){
+        this.render("index");
     }
     
     actionConfirm(){

@@ -236,7 +236,7 @@ class mainProcess{
 
         ipcMain.on("$.ajax",(event,{url,data,type,requestId} )=>{
             let {controller_name,action_name,query} = this.parseUrl(url);
-            //console.log(controller_name, action_name);
+            console.log(controller_name, action_name);
             if(typeof data !== "object"){
                 data = {};
             }

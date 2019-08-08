@@ -1,0 +1,62 @@
+<!--
+ * 
+ * coding: utf-8 
+ * Created on Fri Oct 26 18:58:45 2018
+ * author: 683898
+ * 
+-->
+<!DOCTYPE html>
+<html lang="en" class="{{platform}}">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel = "stylesheet" type="text/css" href="./main.css">
+    </head>
+    <body id="page-main-index">
+        <header class="main-header">
+            <ul class="nav-menu" id="nav-menu"></ul>
+            <ul class="nav-window" id="nav-window">
+                <li class="btn-transition btn-minimize"><i class="icofont-minus icofont-lg"></i></li>
+                <li class="btn-transition btn-resize"><i class="icofont-maximize icofont-lg"></i></li>
+                <li class="btn-transition btn-exit"><i class="icofont-close icofont-lg"></i></li>
+            </ul>
+        </header>
+        <div class="content-wrapper">
+            <div class="sidebar">
+                <ul class="toolbar" id="toolbar">
+                    <li class="separator"></li>
+                    <li class="disabled" data-role="prev" data-tip="←"><i class="icofont-circled-left icofont-sm"></i>{{locales.main_index_prev}}</li>
+                    <li class="disabled" data-role="next" data-tip="→"><i class="icofont-circled-right icofont-sm"></i>{{locales.main_index_next}}</li>
+                    <li class="disabled" data-role="export" data-tip="output"><i class="icofont-check icofont-lg"></i>{{locales.main_index_save}}</li>
+                </ul>
+                <div class="keyTips">
+                    <div class="keyTipsArrow"></div>
+                    <div class="keyTipsText">
+                        <span>{{locales.toolbar_accelerator}}</span>
+                        <br />
+                        <span class="keyValue"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="content" data-toggle="stack" id="app-stack">
+                <ul id="tab-list"></ul>
+                <div class="content-layers" id="layer-list"></div>
+            </div>
+        </div>
+        <footer class="main-page-footer">
+            <div class="copyright">
+                
+            </div>
+        </footer>
+        <script>window.$ = window.jQuery = require("jquery");</script>
+        <script>window.interpreter = new(require('../../locale/interpreter.js'));</script>
+        <script src = '../../rendererProcess.js'></script>
+        <!--<script src="./lib/jquery-toast/jquery-toast.js"></script>-->
+        <script src='./menu.js'></script>
+        <script src='./main.js'></script>
+        <script src='./tab.js'></script>
+    </body>
+</html>
