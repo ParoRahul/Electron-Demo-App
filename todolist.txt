@@ -5,3 +5,7 @@
  * Description: Starting Point of the App
  * 
  */
+ 1. APP Winows Task bar https://electronjs.org/docs/tutorial/windows-taskbar
+ 2. Brcode Scanner & Cammera Interface
+ 3. Print Screen Inter face
+ 

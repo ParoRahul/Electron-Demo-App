@@ -1,0 +1,117 @@
+@import url("../common/css/common.css");
+@import url("../common/icofont/icofont.css");
+@import url("./menu.css");
+body {
+    background-color: #111010;
+    font-weight: 50;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-header {
+    background-color: var(--bg-second);
+    text-align: center;
+    color: var(--text);
+    height: 30px;
+}
+
+.main-header > ul {
+    position: absolute;
+    padding-inline-start:0px;
+}
+
+.main-header > ul > li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    user-select: none;
+    position: relative;
+    padding: 0 10px;
+}
+
+.main-header > ul > li:hover {
+    background-color: #434447;
+    color: var(--text-hover);
+}
+
+.content-wrapper {
+    background-color: #212226;
+    width: 100%;
+    height: calc(100vh - 50px);
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 60px;
+    background-color: var(--tool-bar);
+    position: relative;
+}
+
+.sidebar > .toolbar {
+    margin: 0;
+    position: absolute;
+    width: 60px;
+    bottom: 0;
+    padding-inline-start: 0px;
+}
+
+.sidebar > .toolbar > li {
+    height: 60px;
+    color: #cecece;
+    text-align: center;
+    margin: 0 0;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding: 0 0;
+    display: block;
+}
+
+.sidebar > .toolbar > li i {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 10px;
+    pointer-events: none;
+}
+
+.sidebar > .toolbar > li:hover {
+    color:var(--c-primary);
+}
+
+.sidebar > .toolbar > li:active {
+    color: #38c5c5;
+}
+
+.sidebar > .toolbar > li.selected {
+    background-color: #222;
+}
+
+.sidebar > .toolbar > li.selected:after {
+    background-color: #38c5c5;
+    position: absolute;
+}
+
+/*.content-wrapper .sidebar > .toolbar > li.disabled{
+    color: #666;
+    pointer-events: none;
+}
+
+.content-wrapper .sidebar > .toolbar > li.hidden{
+    display: none;
+}*/
+.content {
+    background-color: #212226;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    background-color: #000000;
+    height:20px;
+}

@@ -1,0 +1,84 @@
+#nav-menu {
+    left:0;
+    position: absolute;
+    z-index: 10;
+    -webkit-app-region: no-drag; 
+}
+
+#nav-menu li {
+    cursor: default;
+    overflow: visible;
+    display: block;
+    position: relative;
+    text-align: left;
+    width: 60px;
+    padding:0 0 0 0;
+}
+
+#nav-menu > li > label {
+    padding:0 0 0 10;
+}
+
+#nav-menu > li > i {
+    display: none;
+}
+
+#nav-menu > li > ul {
+    display: none;
+}
+
+#nav-menu > li.expand > ul {
+    left:0px;
+    display: block;
+    text-align: left;
+    overflow: visible;
+    width: 180px;
+    padding: 0 0 0 0;
+    box-shadow: 0 4px 4px var(--balck);
+    background-color: #202020;
+}
+
+#nav-menu > li.expand > ul li {
+    width: 180px;
+    display: block;
+    text-align: left;
+    overflow: visible;
+}
+
+#nav-menu > li.expand > ul li i {
+    padding: 0 0 0 10px;
+}
+
+#nav-menu > li.expand > ul li >label {
+    padding: 0 0 0 15px;
+}
+
+#nav-menu > li.expand > ul li:hover {
+    background-color:var(--c-primary);
+}
+
+#nav-menu > li > ul > li ul {
+    box-shadow: 0 4px 4px var(--balck);
+    position: absolute;
+    top : 0px;
+    left: 180px;
+    z-index: 1;
+    padding-inline-start:0px;
+}
+
+#nav-menu > li > ul > li:not(.hover) ul {
+    display: none;
+}
+
+#nav-menu > li > ul > li:hover ul {
+    display: block;
+    background-color: #202020;
+}
+
+#nav-menu > li > ul > li:hover ul > li:hover {
+    background-color:var(--c-primary);
+}
+
+#nav-menu > li li.hidden {
+    display: none;
+}
