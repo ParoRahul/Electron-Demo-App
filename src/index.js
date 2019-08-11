@@ -24,9 +24,11 @@ let window_option  = {
     skipTaskbar:true,
     webPreferences: {
         nodeIntegration: true,
+        nodeIntegrationInSubFrames : true,
+        nodeIntegrationInWorker :true,
+        webviewTag: true,
     }   
 }
-
 
 mainProcess.createDesktopApplication(configPath);
 mainProcess.app().run(window_option);

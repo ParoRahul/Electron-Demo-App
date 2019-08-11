@@ -30,6 +30,7 @@ $(function(){
                     useContentSize: true,
                     webPreferences: {
                         nodeIntegration: true,
+                        webviewTag: true,
                     }  
                 })
                 rendererObj.close();
