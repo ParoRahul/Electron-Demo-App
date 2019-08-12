@@ -9,3 +9,6 @@
  2. Brcode Scanner & Cammera Interface
  3. Print Screen Inter face
  
+
+ "prestart": "start mongod --config=./dbConfig.cfg",
+  "poststop": "stop mongo --eval db.getSiblingDB('admin').shutdownServer() "  

@@ -30,6 +30,10 @@ class mainProcess{
             base_path = configs.basePath;
         }
         const menu = new Menu();
+        const accuireAppLock = app.requestSingleInstanceLock();
+        const logpath = app.getPath('temp');
+        console.log(logpath);
+        app.setAppLogsPath(logpath);
         Menu.setApplicationMenu(menu);
         interpreter = new(require(path.join(__dirname,'locale','interpreter.js')));
         appName = interpreter.__('app_name');
@@ -199,6 +203,10 @@ class mainProcess{
     } 
 
     run(launch_win_opt){
+        if ( ! app.hasSingleInstanceLock() ){
+            console.log(" A Instance of The Application is running ...");
+            app.quit(); }
+        else {
         windows = {};
         if(configs.debug){
             app.disableHardwareAcceleration();
@@ -283,6 +291,25 @@ class mainProcess{
                 win.webContents.send("window.addEventListener."+eventName,{requestId,result});
             });
         });
+
+        app.on('quit',(event,exitCode)=>{
+            console.log(` Application is going to be Exit with code ${exitCode}`);
+        });
+
+        app.on('gpu-process-crashed',(event,killed)=>{
+            if (!killed){
+                console.log(` GPU Process Crashed is going to be close the Application`);
+                app.quit();
+            }    
+        });
+
+        app.on('renderer-process-crashed',(event,{webcontent,killed})=>{
+            if (!killed){
+                console.log(` GPU Process Crashed is going to be close the Application`);
+                app.quit();
+            }
+        });
+    }
     }
 }
 module.exports = mainProcess;
