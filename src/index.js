@@ -16,7 +16,7 @@ let window_option  = {
     height: 350,
     modal: false,
     transparent: true,
-    frame: false,
+    frame: true,
     parent: null,
     resizable: false,
     useContentSize: true,

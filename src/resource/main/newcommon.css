@@ -1,0 +1,49 @@
+:root {
+    --c-primary:#347c7c;
+    --c-primary-light:#347c70;
+    --bg-primary:#111010;
+    --bg-second:#363636;
+    --toolbar:#336566;
+    --tool-bar-hover:#2f3011;
+    --titlebar:#2f3033; 
+    --text:#c2c2c2;
+    --text-hover:#fff;
+    --danger:#ce5656;
+    --balck:#000;
+    --tool-bar-width: 60px;
+    --title-bar-height: 30px;
+    --footer-height: 20px
+    --tab-bar-height: 32px;
+
+}   
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar
+{
+    -webkit-appearance: none;
+    width: 10px;
+    background-color: var(--tool-bar);
+}
+
+*::-webkit-scrollbar-track
+{
+    background-color: var(--tool-bar);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--balck);
+}
+
+html, body{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    height:100vh;
+    width: 100vw;
+    -webkit-font-smoothing: antialiased;
+}

@@ -1,0 +1,30 @@
+.titlebar{    
+    border: 1px solid #000;
+    background-color: var(--titlebar);
+    display:flex;
+    flex-direction: row;
+}
+
+.titlebar >div{
+    border: 1px solid #000;
+}
+
+.appicon{
+    flex:0.25;
+}
+
+.menuitems{
+    flex:3;
+    display:flex;
+    flex-direction: row;
+}
+
+.title{
+    flex:5;
+}
+
+.cornerbuttons{
+    flex:0.75;
+    display:flex;
+    flex-direction: row;
+}

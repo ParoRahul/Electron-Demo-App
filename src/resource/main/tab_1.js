@@ -69,7 +69,7 @@ $(function(){
         let html = fs.readFileSync(html_path, 'utf-8');
         let locales = interpreter.locales;
         html = Mustache.render(html, locales);
-        newTab=tabGroup.addTab({
+        let newTab=tabGroup.addTab({
                 title: "Homejjj",
                 icon:"icon icofont-home icofont-lg",
                 divattibute:{
