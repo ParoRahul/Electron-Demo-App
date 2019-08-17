@@ -23,14 +23,15 @@ $(function(){
                     height: 800,
                     minWidth: 800,
                     minHeight: 700,
-                    modal: false,
+                    skipTaskbar:true,
                     frame: false,
                     parent: null,
                     resizable: true,
                     useContentSize: true,
+                    show:false,
                     webPreferences: {
                         nodeIntegration: true,
-                        webviewTag: true,
+                        nodeIntegrationInWorker:true,
                     }  
                 })
                 rendererObj.close();
@@ -47,7 +48,7 @@ $(function(){
     const dbInfo=new database()
     console.log(`mongodb://${dbInfo.hostip}:${dbInfo.port}`);
 
-    MongoClient.connect(`mongodb://${dbInfo.hostip}:${dbInfo.port}/admin`,dbInfo.serveroptions)
+    /* MongoClient.connect(`mongodb://${dbInfo.hostip}:${dbInfo.port}/admin`,dbInfo.serveroptions)
     .then(function(db){
         $(".message").html(interpreter.__("init_page_db_connect_done"));
         console.log('connection Establish ');
@@ -57,5 +58,7 @@ $(function(){
             $(".message").html(err);
             console.error(err);
     }).finally(()=>{
-    });
+        
+    }); */
+    initilizeAPP();
 })

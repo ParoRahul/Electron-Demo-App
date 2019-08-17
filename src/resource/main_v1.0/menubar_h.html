@@ -1,0 +1,17 @@
+{{#each submenu}}
+{{#if type}}
+<li class={{type}}></li> 
+{{/if}}
+{{#if label}}
+<li>
+    <label role="{{role}}">{{label}}</label>
+    {{#if submenu}} 
+    <ul>
+        {{> list}}
+    </ul>
+    {{else}}
+    <i class="indicator fs fs-angel-right"></i>
+    {{/if}}       
+</li>
+{{/if}}
+{{/each}}

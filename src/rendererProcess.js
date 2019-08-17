@@ -204,13 +204,14 @@ $(function(){
             height: 200,
             alwaysOnTop:true,
             show:false,
-            modal: false,
+            modal: true,
             frame: false,
             resizable : false,
             closable : true,
             useContentSize: true,
             webPreferences: {
                 nodeIntegration: true,
+                nodeIntegrationInWorker:true,
             }
         });
     }

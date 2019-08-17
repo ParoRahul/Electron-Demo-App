@@ -1,13 +1,11 @@
 {
-  "name": "Groot",
+  "name": "groot",
   "version": "1.0.0",
   "description": "Small scale accounting software for sales and parches management",
   "main": "src/index.js",
   "scripts": {
-    "preinstall": "",
-    "prestart": "start mongod --config=./dbConfig.cfg",
-    "start": " electron .",
-    "poststop": "stop mongo --eval db.getSiblingDB('admin').shutdownServer() "
+    "start": "electron .",
+    "test": "node src/resource/main_v1.0/testmenu.js"
   },
   "keywords": [],
   "author": "Rahul",
@@ -18,7 +16,8 @@
   "dependencies": {
     "commander": "^2.20.0",
     "custom-electron-titlebar": "^3.1.0",
-    "electron": "^6.0.0",
+    "electron": "^6.0.2",
+    "handlebars": "^4.1.2",
     "jquery": "^3.4.1",
     "mongodb": "^3.3.0-beta2",
     "mustache": "^3.0.1"

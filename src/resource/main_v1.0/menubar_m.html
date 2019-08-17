@@ -1,0 +1,18 @@
+{{#submenu}}
+{{#type}}
+<li class={{type}}></li> 
+{{/type}}
+{{#label}}
+<li>
+    <label role="{{role}}">{{label}}</label>
+    {{#submenu}} 
+    <ul>
+        {{>recursive_partial}}
+    </ul>
+    {{/submenu}}
+    {{^submenu}} 
+    <i class="indicator fs fs-angel-right"></i>
+    {{/submenu}}       
+</li>
+{{/label}}
+{{/submenu}}

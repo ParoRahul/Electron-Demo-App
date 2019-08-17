@@ -10,7 +10,7 @@ const electron = require('electron');
 const ipcMain = electron.ipcMain;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const Menu = electron.Menu
+//const Menu = electron.Menu
 const dialog = electron.dialog
 
 let appTray = null;
@@ -29,14 +29,15 @@ class mainProcess{
         if(typeof configs.basePath === "string"){
             base_path = configs.basePath;
         }
-        const menu = new Menu();
+        //const menu = new Menu();
         const accuireAppLock = app.requestSingleInstanceLock();
         const logpath = app.getPath('temp');
         console.log(logpath);
         app.setAppLogsPath(logpath);
-        Menu.setApplicationMenu(menu);
+        //Menu.setApplicationMenu(menu);
         interpreter = new(require(path.join(__dirname,'locale','interpreter.js')));
         appName = interpreter.__('app_name');
+        console.log('HI From Main Process');
     }
 
     static app(){
@@ -53,7 +54,19 @@ class mainProcess{
         if (!features["title"]) {
             features["title"] = appName;
         }
-        let win = new BrowserWindow(features);
+        let win = new BrowserWindow(features);        
+        win.once('ready-to-show', () => {
+            console.log(" Ready To show catched");
+            if (display_name !== 'Confirm-Window')
+                win.show();
+        });
+        win.on('unresponsive', () => {
+            console.log(" Ready To show catched");
+        });
+        win.on('closed', () => {
+            console.log(" closed event catched");
+            win = null;
+        })
         win.display_name = display_name;
         windows[name] = win;
         if(parent != null){
@@ -91,9 +104,9 @@ class mainProcess{
             }
             win.close();
         }
-        if(Object.keys(windows).length === 0){
+        /* if(Object.keys(windows).length === 0){
             app.exit();
-        }
+        } */
     }
 
     getWindow(name=false){
@@ -309,6 +322,11 @@ class mainProcess{
                 app.quit();
             }
         });
+
+        app.on('window-all-closed', () => {
+            console.log(` window-all-closed event catched`);
+            app.quit()
+        })
     }
     }
 }

@@ -14,19 +14,15 @@ let mainProcess = require(path.join(__dirname,"mainProcess"));
 let window_option  = {
     width: 600,
     height: 350,
-    modal: false,
-    transparent: true,
-    frame: true,
+    frame: false,
     parent: null,
     resizable: false,
+    show:false,
     useContentSize: true,
-    autoHideMenuBar:true,
     skipTaskbar:true,
     webPreferences: {
         nodeIntegration: true,
-        nodeIntegrationInSubFrames : true,
-        nodeIntegrationInWorker :true,
-        webviewTag: true,
+        nodeIntegrationInWorker:true,
     }   
 }
 

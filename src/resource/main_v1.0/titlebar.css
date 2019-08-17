@@ -1,0 +1,24 @@
+@import url("./menubar.css");
+
+.titlebar{    
+    background-color: var(--titlebar);
+    display: flex;
+    flex-direction: row;
+}
+
+.appicon{
+    flex: 0.25;
+}
+
+.menubar{
+    flex: 3;
+    position: relative;
+}
+
+.title{
+    flex: 6;
+}
+
+.nevwindow{
+    flex: 0.75;
+}

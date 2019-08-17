@@ -5,7 +5,7 @@
     --bg-second:#363636;
     --toolbar:#336566;
     --tool-bar-hover:#2f3011;
-    --titlebar:#2f3033; 
+    --titlebar: #2f3241; 
     --text:#c2c2c2;
     --text-hover:#fff;
     --danger:#ce5656;
@@ -46,4 +46,13 @@ html, body{
     height:100vh;
     width: 100vw;
     -webkit-font-smoothing: antialiased;
+}
+
+ul{
+    list-style: none;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
 }

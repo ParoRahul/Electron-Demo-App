@@ -12,3 +12,168 @@
 
  "prestart": "start mongod --config=./dbConfig.cfg",
   "poststop": "stop mongo --eval db.getSiblingDB('admin').shutdownServer() "  
+
+https://codepen.io/joe-watkins/pen/ydbeB
+
+
+let menu = [{
+    label:"menu_file",
+    role:"file",
+    submenu:[
+        {
+            label:"menu_file_new",
+            iconfont:"icofont-plus-square  icofont-md",
+            role:"new"
+        },
+        {
+            type:"separator"
+        },
+        {
+            label:"project_import_text",
+            role:"importList",
+            iconfont:"icofont-sign-in  icofont-md",
+            submenu:[
+                {
+                    label:"menu_file_import",    
+                    role:"import_file"
+                },
+                {
+                    label:"menu_folder_import",    
+                    role:"import_folder"
+                }
+            ]
+        },
+        {
+            label:"menu_file_export",
+            role:"export",
+            iconfont:"icofont-sign-out  icofont-md",
+            enabled:false
+        },
+        {
+            label:"menu_project_settings",
+            role:"project_settings",
+            iconfont:"icofont-options  icofont-md",
+            enabled:false
+        },
+    ]
+},
+{
+    label:"menu_tool",
+    role:"tool",
+    submenu:[
+        {
+            label:"menu_tool_generate",
+            iconfont:"fs-web",
+            submenu:[
+                {
+                    label:"menu_tool_generate_captcha",
+                    role:"captcha"
+                }
+            ]
+        },
+        {
+            label:"project_load_data",
+            submenu:[
+                {
+                    label:"project_load_mnist",
+                    role:"loadMnist"
+                }
+            ]
+        },
+    ]
+},
+{
+    label:"menu_help",
+    role:"help",
+    submenu:[
+        {
+            label:"menu_help_visit",
+            iconfont:"icofont-github icofont-md",
+            role:"homepage"
+        },
+        {
+            label:"menu_help_contact",
+            iconfont:"icofont-contacts   icofont-md", 
+            role:"service",
+            visible: "lang"
+                },
+        {
+            label:"menu_help_about",
+            iconfont:"icofont-info-circle   icofont-md", 
+            role:"version"
+        }
+    ]
+}
+]
+
+<li>
+    <i></i>
+    <label >menu_file</label>
+    <i></i>
+    <ul>
+        <li>
+            <i></i>
+            <label >menu_file_new</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >menu_file</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >project_import_text</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >menu_file_export</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >menu_project_settings</label>
+            <i></i>
+        </li>
+    </ul>
+</li>
+<li>
+    <i></i>
+    <label >menu_tool</label>
+    <i></i>
+    <ul>
+        <li>
+            <i></i>
+            <label >menu_tool_generate</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >project_load_data</label>
+            <i></i>
+        </li>
+    </ul>
+</li>
+<li>
+    <i></i>
+    <label >menu_help</label>
+    <i></i>
+    <ul>
+        <li>
+            <i></i>
+            <label >menu_help_visit</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >menu_help_contact</label>
+            <i></i>
+        </li>
+        <li>
+            <i></i>
+            <label >menu_help_about</label>
+            <i></i>
+        </li>
+    </ul>
+</li>
