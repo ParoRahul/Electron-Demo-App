@@ -47,6 +47,9 @@
 	top:-30px; 
 	left:200px;
 }	
+
+.menubar>ul>li>label>i { visibility: hidden;}
+.menubar ul ul ul li> label>i{ right: 0px;}
 /* .menubar ul ul ul li> label:after { content:  ' >'; }
 .menubar ul ul li> label:after { content:  ' >'; }
 li > label:only-child:after { content: ''; }  */

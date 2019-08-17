@@ -103,12 +103,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log(document.getElementById("menubar").innerHTML);
     var data = `{{#each submenu}}{{#if label}}
     <li>
-        <label role="{{role}}">{{label}}</label>
+        <label role="{{role}}">{{label}}
         {{#if submenu}} 
-        <i class='indicator fs fs-angle-right'></i>
+        <i class='icofont-caret-right icofont-lg'></i></label>
         <ul>
             {{> menulist}}
         </ul>
+        {{else}}
+        </label>
         {{/if}}       
     </li>
     {{/if}}{{/each}}`
