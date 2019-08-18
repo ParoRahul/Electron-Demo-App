@@ -4,39 +4,58 @@
 
 let menutemp = { 
     submenu : [{
-        label:"Accounting",
+        label:"item1",
         role:"file",
         submenu:[
             {
-                label:"menu_file_new",
+                label:"item11",
                 role:"new"
             },
             {
                 type:"separator"
             },
             {
-                label:"project_import_text",
+                label:"item12",
                 role:"importList",
                 indicator:true,
                 submenu:[
                     {
-                        label:"menu_file_import",    
-                        role:"import_file"
+                        label:"item121",    
+                        role:"import_file",
+                        submenu:[
+                            {
+                                label:"item1211",    
+                                role:"import_file"
+                            },
+                            {
+                                label:"item1212",    
+                                role:"import_folder"
+                            }
+                        ]
                     },
                     {
-                        label:"menu_folder_import",    
+                        label:"item122",    
                         role:"import_folder"
                     }
                 ]
             },
             {
-                label:"menu_file_export",
+                label:"item13",
                 role:"export",
                 iconfont:"icofont-sign-out  icofont-md",
-                enabled:false
+                submenu:[
+                    {
+                        label:"item131",    
+                        role:"import_file"
+                    },
+                    {
+                        label:"item132",    
+                        role:"import_folder"
+                    }
+                ]
             },
             {
-                label:"menu_project_settings",
+                label:"item14",
                 role:"project_settings",
                 iconfont:"icofont-options  icofont-md",
                 enabled:false
@@ -44,25 +63,25 @@ let menutemp = {
         ]
     },
     {
-        label:"Transactions",
+        label:"item2",
         role:"tool",
         submenu:[
             {
-                label:"menu_tool_generate",
+                label:"item21",
                 indicator:true,
                 submenu:[
                     {
-                        label:"menu_tool_generate_captcha",
+                        label:"item211",
                         role:"captcha"
                     }
                 ]
             },
             {
-                label:"project_load_data",
+                label:"item22",
                 indicator:true,
                 submenu:[
                     {
-                        label:"project_load_mnist",
+                        label:"item221",
                         role:"loadMnist"
                     }
                 ]
@@ -102,11 +121,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var main = Handlebars.compile( `<ul class="menuitems">{{> menulist}}</ul>`);
     console.log(document.getElementById("menubar").innerHTML);
     var data = `{{#each submenu}}{{#if label}}
-    <li>
+    <li class="parent">
         <label role="{{role}}">{{label}}
         {{#if submenu}} 
         <i class='icofont-caret-right icofont-lg'></i></label>
-        <ul>
+        <ul class="child">
             {{> menulist}}
         </ul>
         {{else}}

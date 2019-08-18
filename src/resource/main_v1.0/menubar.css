@@ -1,4 +1,4 @@
-.menubar ul {
+/* .menubar ul {
 	padding: 0;
     margin: 0;
 	list-style: none;
@@ -21,7 +21,8 @@
 	line-height: 30px;
 }
 
-.menubar li:hover { 
+.menubar label:hover,
+.menubar label:focus-within { 
 	background-color:#2c3e50; 
 }
 
@@ -31,7 +32,9 @@
 	top: 30px; 	
 }
 
-.menubar ul li:hover > ul {
+.menubar ul li:hover > ul ,
+.menubar ul li:focus-within > ul 
+{
     display:inherit;
 }	
 
@@ -58,4 +61,88 @@
 .menubar ul ul li> label>i{
 	line-height: 30px;
 	float:right;
+}
+
+.menubar ul li ul li {
+	clear: both;
+	width: 200px;
+} 
+ */
+
+.menubar .parent { 
+	display: block;
+	position: relative;
+	float: left;
+	line-height: 30px;
+	background-color:#202020;
+}
+
+.menubar .parent label {
+	display:block;
+    padding:0 10px;	
+    margin:0;
+	color:#FFF;
+	font-size:12px;
+	line-height: 30px;
+}
+
+.menubar .child label {
+	box-shadow: 0 4px 4px var(--balck);
+}
+
+.menubar>ul>li>label>i { 
+	float:right;
+	font-size: 0px;
+	visibility: hidden;
+}
+
+.menubar ul ul li> label>i{
+	line-height: 30px;
+	float:right;
+}
+
+.menubar .parent:hover > ul {
+	display:block;
+	position:absolute;
+}
+
+.menubar .child {
+	display: none;
+}
+
+.menubar .child li { 
+	background-color: #202020;
+	line-height: 30px;
+	width:200px;
+}
+
+.menubar .child li label{
+	color: #fff;
+}
+
+.menubar ul { 
+	list-style: none;
+	margin: 0;
+	padding: 0px;
+	min-width:10em;
+}
+
+.menubar ul ul ul{
+	left: 100%;
+	top: 0;
+	margin-left:1px;
+}
+
+.menubar li:hover {
+	background-color:#2c3e50;;
+}
+
+.menubar .parent li:hover {
+	background-color:#2c3e50;;
+}
+
+.menubar .expand{
+	font-size:12px;
+	float:right;
+	margin-right:5px;
 }
