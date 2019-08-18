@@ -5,9 +5,11 @@
     --bg-primary:#111010;
     --bg-second:#363636;
     --toolbar:#336566;
+    --bghover:#336566;
     --tool-bar-hover:#2f3011;
-    --titlebar: #2f3241; 
-    --text:#c2c2c2;
+    --titlebar: #363636; 
+    --titlebarhover:#565656;
+    --text: #fff;
     --text-hover:#fff;
     --danger:#ce5656;
     --balck:#000;

@@ -1,80 +1,9 @@
-/* .menubar ul {
-	padding: 0;
-    margin: 0;
-	list-style: none;
-	position: relative;
-	z-index: 10;
-}
-
-.menubar ul li {
-	display:block;
-    background-color: #202020;
-	float:left;
-}
-
-.menubar label {
-	display:block;
-    padding:0 10px;	
-    margin:0;
-	color:#FFF;
-	font-size:12px;
-	line-height: 30px;
-}
-
-.menubar label:hover,
-.menubar label:focus-within { 
-	background-color:#2c3e50; 
-}
-
-.menubar ul ul {
-	display: none;
-    position: absolute; 
-	top: 30px; 	
-}
-
-.menubar ul li:hover > ul ,
-.menubar ul li:focus-within > ul 
-{
-    display:inherit;
-}	
-
-.menubar ul ul li {
-	width:200px;
-	float:none;
-	display:list-item;
-    position: relative;
-    box-shadow: 0 4px 4px var(--balck);
-}
-
-.menubar ul ul ul li {
-	position: relative;
-	top:-30px; 
-	left:200px;
-}	
-
-.menubar>ul>li>label>i { 
-	float:right;
-	font-size: 0px;
-	visibility: hidden;
-}
-
-.menubar ul ul li> label>i{
-	line-height: 30px;
-	float:right;
-}
-
-.menubar ul li ul li {
-	clear: both;
-	width: 200px;
-} 
- */
-
 .menubar .parent { 
 	display: block;
 	position: relative;
 	float: left;
 	line-height: 30px;
-	background-color:#202020;
+	background-color: var(--titlebar);
 }
 
 .menubar .parent label {
@@ -97,7 +26,7 @@
 }
 
 .menubar ul ul li> label>i{
-	line-height: 30px;
+	line-height: var(--title-bar-height);
 	float:right;
 }
 
@@ -111,13 +40,13 @@
 }
 
 .menubar .child li { 
-	background-color: #202020;
-	line-height: 30px;
+	background-color: var(--titlebar);
+	line-height: var(--title-bar-height);
 	width:200px;
 }
 
 .menubar .child li label{
-	color: #fff;
+	color: var(--text);
 }
 
 .menubar ul { 
@@ -134,11 +63,11 @@
 }
 
 .menubar li:hover {
-	background-color:#2c3e50;;
+	background-color: var(--titlebarhover);
 }
 
 .menubar .parent li:hover {
-	background-color:#2c3e50;;
+	background-color: var(--bghover);
 }
 
 .menubar .expand{
