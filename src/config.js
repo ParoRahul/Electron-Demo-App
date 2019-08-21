@@ -7,27 +7,63 @@
  */
 
 const path = require('path')
-const db = {
-    'dbpath'            : path.join(__dirname,"..","db"),
-    'hostIp'            : 'localhost',
-    'port'              : 2001,
-    'dbname'            : 'grootdb',
-    'userid'            : 'grootuser',
-    'password'          : 'grootpassword',
+
+let config = {
+    debug:false,
+    logpath:path.join(__dirname,"..","db"),
+    dbCfg : {
+        dbpath: path.join(__dirname,"..","db"),
+        dbname: 'grootdb'
+    },
+    windowCfgs : [
+        {
+            id:0,
+            title :'Init Window',
+            width: 600,
+            height: 350,
+            frame: false,
+            parent: null,
+            resizable: false,
+            show:false,
+            useContentSize: true,
+            skipTaskbar:true,
+            webPreferences: {
+                nodeIntegration: true,
+                nodeIntegrationInWorker:true,
+            }
+        }, 
+        {
+            id:1,
+            title :'Main Window',
+            width: 1460,
+            height: 800,
+            minWidth: 800,
+            minHeight: 700,
+            skipTaskbar:false,
+            frame: false,
+            parent: null,
+            resizable: true,
+            useContentSize: true,
+            show:false,
+            webPreferences: {
+                nodeIntegration: true,
+                nodeIntegrationInWorker:true,
+            }
+        }
+    ],
+
+    getWindowCfgById : function(id) { 
+        return this.windowCfgs.find(wincfg => wincfg.id == id)
+    } ,
+
+    getWindowCfgByTitle : function(title) {
+        return this.windowCfgs.find(wincfg => wincfg.title == title)
+    },
+
+    getWindowTitleById : function(id) { 
+        return this.windowCfgs.find(wincfg =>wincfg.id == id).title },
+
+
 }
 
-const serveroptions={
-    useNewUrlParser: true ,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
-}
-
-module.exports = {
-    'basePath'          : path.join(__dirname,".."),    
-    'defaultController' : 'init',
-    'defaultLanguage'   : 'en',
-    'debug'             : true,
-    'debugWindow'       : 'ALL',
-    'db'                : db,
-    'serveroptions'     : serveroptions
-}
+module.exports = config;

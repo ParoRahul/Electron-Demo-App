@@ -10,152 +10,65 @@ const electron = require('electron');
 const ipcMain = electron.ipcMain;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-//const Menu = electron.Menu
 const dialog = electron.dialog
 
-let appTray = null;
 const path = require('path');
 const url = require('url');
 let interpreter;
 let configs;
-let windows = {};
-let window_main;
-let base_path = __dirname;
-let appName = "Groot";
 
 class mainProcess{
-    static createDesktopApplication(configPath){
-        configs = require(configPath);
-        if(typeof configs.basePath === "string"){
-            base_path = configs.basePath;
+    constructor() {
+        app.requestSingleInstanceLock();
+        if ( ! app.hasSingleInstanceLock() ){
+            console.log(" ............................................");
+            console.log(" A Instance of The Application is running ...");
+            console.log(" ............................................");
+            app.quit(); 
         }
-        //const menu = new Menu();
-        const accuireAppLock = app.requestSingleInstanceLock();
-        const logpath = app.getPath('temp');
-        console.log(logpath);
         app.setAppLogsPath(logpath);
-        //Menu.setApplicationMenu(menu);
+        configs = require(path.join(__dirname,'config.js'));
         interpreter = new(require(path.join(__dirname,'locale','interpreter.js')));
-        appName = interpreter.__('app_name');
-        console.log('HI From Main Process');
     }
 
-    static app(){
-        return new mainProcess();
-    }
+    createWindow(id){
+        let window = new BrowserWindow(features);        
+        loadPage(id);
+        window.setContentProtection(true);
+        window.once('ready-to-show', () => {
+            if (window.getTitle() !== 'Confirm-Window')
+                window.show();
+        });
 
-    createWindow(features,name=false,parent=null){
-        let display_name = name;
-        if(name === false){
-            name = "root";
-            display_name = "root";
-        }
-        features["icon"] = path.join(__dirname,'image','logo.png');
-        if (!features["title"]) {
-            features["title"] = appName;
-        }
-        let win = new BrowserWindow(features);        
-        win.once('ready-to-show', () => {
-            console.log(" Ready To show catched");
-            if (display_name !== 'Confirm-Window')
-                win.show();
-        });
-        win.on('unresponsive', () => {
+        window.on('unresponsive', () => {
             console.log(" Ready To show catched");
         });
-        win.on('closed', () => {
+
+        window.on('closed', () => {
             console.log(" closed event catched");
-            win = null;
-        })
-        win.display_name = display_name;
-        windows[name] = win;
-        if(parent != null){
-            if(!parent._children){
-                parent._children = [win];
-            }else{
-                parent._children.push(win);
-            }
-        }
-        return win;
+            window = null;
+        });
+
+        window.webContents.on('did-fail-load', () => {
+            loadPage(id);
+        });
+      
+        window.webContents.on('crashed', () => {
+            console.log('Your Ember app (or other code) in the main window has crashed.');
+            console.log('This is a serious issue that needs to be handled and/or debugged.');
+        });
+      
+        window.on('unresponsive', () => {
+            console.log('Your Ember app (or other code) has made the window unresponsive.');
+        });
+      
+        window.on('responsive', () => {
+            console.log('The main window has become responsive again.');
+        });
+        
+        return window;
     }
 
-    popWindow(name=false){
-        if(name === false || name === "root"){
-            name = "root";
-        }else{
-            name = name;
-        }
-        let win = windows[name];
-        delete windows[name];
-        return win;
-    }
-
-    closeWindow(name){
-        let win = this.popWindow(name);
-        if(win){
-            if(win._children){
-                for(let i=0;i<win._children.length;i++){
-                    var child = win._children[i];
-                    child = this.popWindow(child.display_name);
-                    if(child){
-                        child.close();
-                    }
-                }
-            }
-            win.close();
-        }
-        /* if(Object.keys(windows).length === 0){
-            app.exit();
-        } */
-    }
-
-    getWindow(name=false){
-        if(name === false || name === "root"){
-            name = "root";
-        }else{
-            name = name;
-        }
-        return windows[name];
-    }
-
-    hideWindow(name){
-        let win = this.getWindow(name);
-        if(win){
-            win.hide();
-        }
-    }
-
-    showWindow(name,features){
-        let win = this.getWindow(name);
-        if(win){
-            if(features && features.x>=0 && features.y>=0 ){
-                win.setPosition(features.x,features.y);
-            }
-            win.show();
-        }
-    }
-
-    parseUrl(url){
-        let matches =/[\/\\]([^\/\\]+)[\\\/]([^\\\/?]+)(\?[^\/\\]+)?$/.exec(url);
-        if(matches){
-            let scheduler_name = matches[1];
-            let action = matches[2];
-            let query = {};
-            if(matches.length == 4 && typeof matches[3] != "undefined"){
-                let queries = matches[3].substr(1).split("&");
-                for(let i in queries){
-                    let q = queries[i];
-                    let kv = q.split("=");
-                    if(kv.length == 2 && kv[0] != ""){
-                        query[kv[0]] = kv[1];
-                    }
-                }
-            }
-            return {"scheduler_name":scheduler_name,"action_name":action, "query":query};
-        }
-        return {};
-    }
-    
     windowScheduler(scheduler_name,action_name,data={},window = null){
         //console.log(controller_name,action_name);
         let scheduler = this.callScheduler(scheduler_name,action_name,data);
@@ -215,43 +128,23 @@ class mainProcess{
         return scheduler
     } 
 
-    run(launch_win_opt){
-        if ( ! app.hasSingleInstanceLock() ){
-            console.log(" A Instance of The Application is running ...");
-            app.quit(); }
-        else {
-        windows = {};
+    run(){
         if(configs.debug){
             app.disableHardwareAcceleration();
         }
         
         app.on('ready', () => {
-            let default_scheduler = "init";
-            let default_action = "Load";
-            if(typeof this.getWindow() == "undefined"){
-                this.createWindow(launch_win_opt);
+            if(BrowserWindow.fromId(0) == null){
+                this.createWindow(config.getWindowCfgById(0));
             }
-            this.windowScheduler(default_scheduler,default_action);
         });
 
-        ipcMain.on('window.open',(event, {url, name, features, parent}) => {
-            if(typeof features == "undefined"){
-                features = {};
-            }
-            let currWin = this.getWindow(name);
-            if(!currWin){
-                let parent_window = this.getWindow(parent);
-                if(typeof features["parent"] != "undefined"){
-                    parent_window = null;
-                }else if(features.modal == true){
-                    features["parent"] = parent_window;
-                }
-                let {scheduler_name, action_name, query} = this.parseUrl(url);
-                //console.log(controller_name, action_name);
-                this.windowScheduler(scheduler_name,action_name,query,
-                    this.createWindow(features,name,parent_window));
+        ipcMain.on('window.open',(event, {id, parent_id}) => {            
+            let currentWindow = BrowserWindow.fromId(id);
+            if( currentWindow == null){
+                this.createWindow(id);
             }else{
-                currWin.show();
+                currentWindow.show();
             }
         });
 
@@ -273,36 +166,48 @@ class mainProcess{
             }
         });
 
-        ipcMain.on('window.close',(event, name) => {
-            this.closeWindow(name);
+        ipcMain.on('window.close',(event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
+            if( currentWindow != null)
+                currentWindow.close()
         });
 
-        ipcMain.on('window.exist',(event,name)=>{
-            let win = this.getWindow(name);
-            event.returnValue=!!win;
+        ipcMain.on('window.exist',(event,id)=>{
+            let currentWindow = BrowserWindow.fromId(id);
+            if( currentWindow != null)
+                event.returnValue=true;
+            else    
+                event.returnValue=false; 
         });
 
-        ipcMain.on('window.hide',(event, name) => {
-            this.hideWindow(name);
+        ipcMain.on('window.hide',(event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
+            if( currentWindow != null)
+                currentWindow.hide();
         });
 
-        ipcMain.on('window.show',(event, {name,features}) => {
-            this.showWindow(name,features);
+        ipcMain.on('window.show',(event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
+            if( currentWindow != null)
+                currentWindow.show();
         });
 
         ipcMain.on('window.triggerEvent',(event,{eventName,targetWindow,args}) => {
-            let win = this.getWindow(targetWindow);
-            if(win){
-                win.webContents.send("window.addEventListener."+eventName,args);
+            let currentWindow = BrowserWindow.fromId(id);
+            if(currentWindow != null){
+                currentWindow.webContents.send("window.addEventListener."+eventName,args);
             }
         });
 
-        ipcMain.on('dialog.Show',(event,{name,features,requestId,eventName}) => {
-            let win = this.getWindow(name);
-            dialog.showOpenDialog(win,features,function (result) {
-                console.log(result);
-                win.webContents.send("window.addEventListener."+eventName,{requestId,result});
-            });
+        ipcMain.on('dialog.Show',(event,{id,requestId,eventName}) => {
+            let currentWindow = BrowserWindow.fromId(id);
+            if(currentWindow != null){
+                dialog.showOpenDialog(win,config.getWindowCfgById(id),
+                function (result) {
+                    console.log(result);
+                    currentWindow.webContents.send("window.addEventListener."+eventName,{requestId,result});
+                });
+            }            
         });
 
         app.on('quit',(event,exitCode)=>{
@@ -328,6 +233,6 @@ class mainProcess{
             app.quit()
         })
     }
-    }
 }
+
 module.exports = mainProcess;
