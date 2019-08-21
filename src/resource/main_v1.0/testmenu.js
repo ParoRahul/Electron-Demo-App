@@ -119,7 +119,7 @@ let menutemp = {
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM fully loaded and parsed');
     var main = Handlebars.compile( `<ul class="menuitems">{{> menulist}}</ul>`);
-    console.log(document.getElementById("menubar").innerHTML);
+    //console.log(document.getElementById("menubar").innerHTML);
     var data = `{{#each submenu}}{{#if label}}
     <li class="parent">
         <label role="{{role}}">{{label}}

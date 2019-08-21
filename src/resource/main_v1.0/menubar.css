@@ -33,6 +33,7 @@
 .menubar .parent:hover > ul {
 	display:block;
 	position:absolute;
+	cursor:pointer;
 }
 
 .menubar .child {
@@ -64,10 +65,12 @@
 
 .menubar li:hover {
 	background-color: var(--titlebarhover);
+	cursor:pointer;
 }
 
 .menubar .parent li:hover {
 	background-color: var(--bghover);
+	cursor:pointer;
 }
 
 .menubar .expand{

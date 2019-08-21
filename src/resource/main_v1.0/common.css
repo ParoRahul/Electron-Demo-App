@@ -1,23 +1,20 @@
 @import url("../common/icofont/icofont.css");
 :root {
-    --c-primary:#347c7c;
-    --c-primary-light:#347c70;
-    --bg-primary:#111010;
-    --bg-second:#363636;
-    --toolbar:#336566;
-    --bghover:#336566;
-    --tool-bar-hover:#2f3011;
+    --toolbar:#262626;
+    --toolbarhover:#464646;
     --titlebar: #363636; 
     --titlebarhover:#565656;
+    --statusbar:#2c3e50;
+    --tabbar:#afbf1f;
+    --tabview:#f0f0f0;
+    --bghover:#336566;
     --text: #fff;
-    --text-hover:#fff;
     --danger:#ce5656;
     --balck:#000;
     --tool-bar-width: 60px;
     --title-bar-height: 30px;
     --footer-height: 20px;
     --tab-bar-height: 32px;
-
 }   
 
 *{

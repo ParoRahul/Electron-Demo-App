@@ -1,6 +1,7 @@
 @import url("./common.css");
 @import url("./titlebar.css");
 @import url("./toolbar.css");
+@import url("./tabManager.css");
 
 body {
     height: 100vh;
@@ -33,17 +34,17 @@ body {
 .tabbar{
     grid-row: 2/3;
     grid-column: 3/4;
-    background-color: #ababab;
+    
 }
 
 .tabsview{
     grid-row: 3/4;
     grid-column: 3/4;
-    background-color: #555;
+    
 }
 
 .footer{
     grid-row:4/5;
     grid-column:1/4;
-    background-color: #788fff;
+    background-color: var(--statusbar);
 }
