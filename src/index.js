@@ -9,23 +9,9 @@
 const path = require('path')
 const configPath = path.join(__dirname,'config.js');
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
-let mainProcess = require(path.join(__dirname,"mainProcess"));
+let mainProcess = require(path.join(__dirname,'mainProcess.js'));
 
-let window_option  = {
-    width: 600,
-    height: 350,
-    frame: false,
-    parent: null,
-    resizable: false,
-    show:false,
-    useContentSize: true,
-    skipTaskbar:true,
-    webPreferences: {
-        nodeIntegration: true,
-        nodeIntegrationInWorker:true,
-    }   
-}
 
-mainProcess.createDesktopApplication(configPath);
-mainProcess.app().run(window_option);
+Let MainProcess = new mainProcess();
+MainProcess.app();
 
