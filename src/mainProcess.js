@@ -32,22 +32,29 @@ class mainProcess{
     }
 
     createWindow(id){
-        let window = new BrowserWindow(features);        
-        loadPage(id);
-        window.setContentProtection(true);
-        window.once('ready-to-show', () => {
+        let window = new BrowserWindow(configs.getWindowCfgById(id));        
+        window.loadURL(url.format({
+                    pathname: path.join(__dirname,'index.html'),
+                    protocol: 'file:',
+                    slashes: true })
+        }).then(()=>{
+           if (config.debug){
+                
+           }
+           window.setContentProtection(true);
+           window.once('ready-to-show', () => {
             if (window.getTitle() !== 'Confirm-Window')
                 window.show();
-        });
+           });
 
-        window.on('unresponsive', () => {
+           window.on('unresponsive', () => {
             console.log(" Ready To show catched");
-        });
+           });
 
-        window.on('closed', () => {
+           window.on('closed', () => {
             console.log(" closed event catched");
             window = null;
-        });
+           });
 
         window.webContents.on('did-fail-load', () => {
             loadPage(id);
@@ -67,6 +74,9 @@ class mainProcess{
         });
         
         return window;
+    }).catch((err)=>{
+       console.err(err);
+     });
     }
 
     windowScheduler(scheduler_name,action_name,data={},window = null){
@@ -134,8 +144,8 @@ class mainProcess{
         }
         
         app.on('ready', () => {
-            if(BrowserWindow.fromId(0) == null){
-                this.createWindow(config.getWindowCfgById(0));
+            if(BrowserWindow.fromId(1) == null){
+                this.createWindow(1);
             }
         });
 
