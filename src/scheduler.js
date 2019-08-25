@@ -7,33 +7,33 @@
  */
 
 const Mustache = require('mustache');
-const path     = require('path');
-const fs       = require('fs');
+const path = require('path');
+const fs = require('fs');
 
-class baseScheduler{
-    constructor(base_path){
+class baseScheduler {
+    constructor(base_path) {
         this.base_path = base_path;
     }
 
-    __(str){
+    __(str) {
         return this._interpreter.__(str);
     }
 
-    setActionName(action_name){
+    setActionName(action_name) {
         this.action_name = action_name;
     }
-    
-    render(html_name, data = {}){
+
+    render(html_name, data = {}) {
         this.output = "";
-        this.html_path=path.join(this.base_path,html_name+".html");
+        let html_path = path.join(this.base_path, html_name + ".html");
         let html = fs.readFileSync(html_path, 'utf-8');
-        if(!data.platform){
+        if (!data.platform) {
             data.platform = process.platform;
         }
-        if(!data.locales){
+        if (!data.locales) {
             data.locales = this._interpreter.locales;
         }
-        content = Mustache.render(html, data);
+        let content = Mustache.render(html, data);
         this.output += content;
     }
 

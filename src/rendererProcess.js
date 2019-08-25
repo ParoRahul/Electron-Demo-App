@@ -2,7 +2,7 @@
  * coding: utf-8 
  * Created on Fri Oct 26 18:58:45 2018
  * author: 683898
- * 
+ * Description: Rendrer Process for All window 
  */
 
 const {ipcRenderer,remote,shell} = require('electron');
