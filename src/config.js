@@ -12,10 +12,10 @@ const fs = require('fs');
 class config {
     constructor() {
         if (typeof config.instance === 'object') {
-            console.log(" First Instance created")
+            //console.log(" First Instance created")
             return config.instance;
         }
-        console.log(" Single Tone Activated")
+        //console.log(" Single Tone Activated")
         config.instance = this;
         this.debug = true;
         this.logpath = path.join(__dirname, "..", "db");
@@ -31,6 +31,24 @@ class config {
         }
     }
 
+    loadMenuConfig() {
+        let menuConfig = fs.readFileSync(this.menuConfigFile,'utf8');
+        this.menuConfig = JSON.parse(menuConfig);
+        /* fs.readFile(this.menuConfigFile,function(err, data){
+            if (err) throw err;
+            this.menuConfig = JSON.parse(data);             
+        }); */
+    }
+
+    loadWindowConfig() {
+        let windowConfig = fs.readFileSync(this.windowConfigFile,'utf8');
+        this.windowConfig = JSON.parse(windowConfig);        
+        /* fs.readFile(this.windowConfigFile,function(err, data){
+            if (err) throw err;
+            this.windowConfig = JSON.parse(data);             
+        }) */
+    }
+
     getWindowCfgById(id) {
         return this.windowConfig.find(wincfg => wincfg.id == id)
     }
@@ -43,23 +61,7 @@ class config {
         return this.windowConfig.find(wincfg => wincfg.id == id).title
     }
 
-    loadMenuConfig() {
-        fs.readFile(menuConfigFile).then((menuConfig) => {
-            this.menuConfig = JON.parse(menuConfig);
-        }).catch((error) => {
-            console.error(error);
-            throw new Error('MenuConfig Not Found');
-        });
-    }
-
-    loadWindowConfig() {
-        fs.readFile(windowConfigFile).then((windowConfig) => {
-            this.menuConfig = JON.parse(windowConfig);
-        }).catch((error) => {
-            console.error(error);
-            throw new Error('MenuConfig Not Found');
-        });
-    }
+    
 
 }
 

@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "electron .",
-    "test": "node src/resource/main_v1.0/testmenu.js"
+    "test": "node src/testconfig.js"
   },
   "keywords": [],
   "author": "Rahul",

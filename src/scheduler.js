@@ -11,8 +11,8 @@ const path = require('path');
 const fs = require('fs');
 
 class baseScheduler {
-    constructor(base_path) {
-        this.base_path = base_path;
+    constructor(scheduler) {
+        this.base_path = path.join(__dirname,scheduler);
     }
 
     __(str) {
@@ -25,8 +25,8 @@ class baseScheduler {
 
     render(html_name, data = {}) {
         this.output = "";
-        let html_path = path.join(this.base_path, html_name + ".html");
-        let html = fs.readFileSync(html_path, 'utf-8');
+        this.html_path = path.join(this.base_path, html_name + ".html");
+        let html = fs.readFileSync(this.html_path, 'utf-8');
         if (!data.platform) {
             data.platform = process.platform;
         }

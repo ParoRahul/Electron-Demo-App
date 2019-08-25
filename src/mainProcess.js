@@ -19,7 +19,7 @@ const dialog = electron.dialog
 const path = require('path');
 const url = require('url');
 let interpreter;
-const configs;
+let configs;
 
 class mainProcess {
     constructor() {
@@ -83,24 +83,27 @@ class mainProcess {
             });
 
             return window;
+
         }).catch(err => console.error(err));
     }
 
     pageScheduler(id, data = {}) {
         return new Promise(function(resolve, reject) {
             let option = configs.getWindowCfgById(id);
-            let schedulerCls = require(path.join(option.PageDtls.homeDir, "scheduler.js"));
-            let scheduler = new schedulerCls(option.PageDtls.homeDir);
+            let schedulerCls = require(path.join(__dirname,option.pageDtls.scheduler,"scheduler.js"));
+            let scheduler = new schedulerCls(option.pageDtls.scheduler);
+            //console.log(` scheduler.base_path ${scheduler.base_path}`);
             scheduler._interpreter = interpreter;
-            let action_func_name = "action" + option.PageDtls.task;
-            scheduler.setActionName(option.PageDtls.task);
+            let action_func_name = "action" + option.pageDtls.task;
+            scheduler.setActionName(option.pageDtls.task);
             scheduler.action_result = scheduler[action_func_name](data);
+            //console.log(` scheduler.output ${scheduler.output}`);
             let html = 'data:text/html;charset=UTF-8,' +
                 encodeURIComponent("<script>window.name='" + option.title + "';</script>\n" + scheduler.output);
             let window = BrowserWindow.fromId(id);
             window.loadURL(html, {
                 baseURLForDataURL: url.format({
-                    pathname: scheduler.base_path,
+                    pathname: scheduler.html_path,
                     protocol: 'file:',
                     slashes: true
                 })
