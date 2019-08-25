@@ -19,7 +19,7 @@ const dialog = electron.dialog
 const path = require('path');
 const url = require('url');
 let interpreter;
-let configs;
+const configs;
 
 class mainProcess {
     constructor() {
@@ -38,12 +38,12 @@ class mainProcess {
     createWindow(id) {
         let window = new BrowserWindow(configs.getWindowCfgById(id));
 
-        window.loadURL(url.format({
+        /* window.loadURL(url.format({
             protocol: 'file',
             slashes: true,
             pathname: path.join(__dirname, 'main', 'index.html')
-        })).then(() => {
-            //this.pageScheduler(id).then(() => {
+        })).then(() => { */
+        this.pageScheduler(id).then(() => {
             if (configs.debug) {
                 window.openDevTools();
             }

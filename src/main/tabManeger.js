@@ -1,10 +1,15 @@
+/**
+ * coding: utf-8 
+ * Created on sun Aug 25 07:59:00 PM 2019
+ * author: Rahul
+ * Description: Tabbar Class
+ * 
+ */
+
 const EventEmitter = require("events");
 
-// Inject styles
-
-
 class tabScheduler extends EventEmitter {
-    constructor (args = {}) {
+    constructor(args = {}) {
         super();
         let options = this.options = {
             tabContainerSelector: args.tabContainerSelector || ".tabContainer",
@@ -24,7 +29,7 @@ class tabScheduler extends EventEmitter {
         }
     }
 
-    addTab (args) {
+    addTab(args) {
         let id = this.newTabId;
         this.newTabId++;
         let tab = new Tab(this, id, args);
@@ -37,7 +42,7 @@ class tabScheduler extends EventEmitter {
         return tab;
     }
 
-    getTab (id) {
+    getTab(id) {
         for (let i in this.tabs) {
             if (this.tabs[i].id === id) {
                 return this.tabs[i];
@@ -46,7 +51,7 @@ class tabScheduler extends EventEmitter {
         return null;
     }
 
-    getTabByPosition (position) {
+    getTabByPosition(position) {
         let fromRight = position < 0;
         for (let i in this.tabs) {
             if (this.tabs[i].getPosition(fromRight) === position) {
@@ -56,7 +61,7 @@ class tabScheduler extends EventEmitter {
         return null;
     }
 
-    getTabByRelPosition (position) {
+    getTabByRelPosition(position) {
         position = this.getActiveTab().getPosition() + position;
         if (position <= 0) {
             return null;
@@ -64,24 +69,24 @@ class tabScheduler extends EventEmitter {
         return this.getTabByPosition(position);
     }
 
-    getNextTab () {
+    getNextTab() {
         return this.getTabByRelPosition(1);
     }
 
-    getPreviousTab () {
+    getPreviousTab() {
         return this.getTabByRelPosition(-1);
     }
 
-    getTabs () {
-      return this.tabs.slice();
+    getTabs() {
+        return this.tabs.slice();
     }
 
-    eachTab (fn) {
-      this.getTabs().forEach(fn);
-      return this;
+    eachTab(fn) {
+        this.getTabs().forEach(fn);
+        return this;
     }
 
-    getActiveTab () {
+    getActiveTab() {
         if (this.tabs.length === 0) return null;
         return this.tabs[0];
     }
@@ -89,7 +94,7 @@ class tabScheduler extends EventEmitter {
 
 const TabGroupPrivate = {
 
-    removeTab: function (tab, triggerEvent) {
+    removeTab: function(tab, triggerEvent) {
         let id = tab.id;
         for (let i in this.tabs) {
             if (this.tabs[i].id === id) {
@@ -103,14 +108,14 @@ const TabGroupPrivate = {
         return this;
     },
 
-    setActiveTab: function (tab) {
+    setActiveTab: function(tab) {
         TabGroupPrivate.removeTab.bind(this)(tab);
         this.tabs.unshift(tab);
         this.emit("tab-active", tab, this);
         return this;
     },
 
-    activateRecentTab: function (tab) {
+    activateRecentTab: function(tab) {
         if (this.tabs.length > 0) {
             this.tabs[0].activate();
         }
@@ -119,7 +124,7 @@ const TabGroupPrivate = {
 };
 
 class Tab extends EventEmitter {
-    constructor (tabGroup, id, args) {
+    constructor(tabGroup, id, args) {
         super();
         this.tabGroup = tabGroup;
         this.id = id;
@@ -128,7 +133,7 @@ class Tab extends EventEmitter {
         this.iconURL = args.iconURL;
         this.icon = args.icon;
         this.closable = args.closable === false ? false : true;
-        this.innerhtml =  args.innerhtml === false ? false : true;
+        this.innerhtml = args.innerhtml === false ? false : true;
         this.divattibute = args.divattibute || {};
         this.tabElements = {};
         TabPrivate.initTab.bind(this)();
@@ -141,7 +146,7 @@ class Tab extends EventEmitter {
         }
     }
 
-    setTitle (title) {
+    setTitle(title) {
         if (this.isClosed) return;
         let span = this.tabElements.title;
         span.innerHTML = title;
@@ -150,12 +155,12 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    getTitle () {
+    getTitle() {
         if (this.isClosed) return;
         return this.title;
     }
 
-    setBadge (badge) {
+    setBadge(badge) {
         if (this.isClosed) return;
         let span = this.tabElements.badge;
         this.badge = badge;
@@ -170,12 +175,12 @@ class Tab extends EventEmitter {
         this.emit("badge-changed", badge, this);
     }
 
-    getBadge () {
-      if (this.isClosed) return;
-      return this.badge;
+    getBadge() {
+        if (this.isClosed) return;
+        return this.badge;
     }
 
-    setIcon (iconURL, icon) {
+    setIcon(iconURL, icon) {
         if (this.isClosed) return;
         this.iconURL = iconURL;
         this.icon = icon;
@@ -190,13 +195,13 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    getIcon () {
+    getIcon() {
         if (this.isClosed) return;
         if (this.iconURL) return this.iconURL;
         return this.icon;
     }
 
-    setPosition (newPosition) {
+    setPosition(newPosition) {
         let tabContainer = this.tabGroup.tabContainer;
         let tabs = tabContainer.children;
         let oldPosition = this.getPosition() - 1;
@@ -225,7 +230,7 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    getPosition (fromRight) {
+    getPosition(fromRight) {
         let position = 0;
         let tab = this.tab;
         while ((tab = tab.previousSibling) != null) position++;
@@ -241,7 +246,7 @@ class Tab extends EventEmitter {
         return position;
     }
 
-    activate () {
+    activate() {
         if (this.isClosed) return;
         let activeTab = this.tabGroup.getActiveTab();
         if (activeTab) {
@@ -256,7 +261,7 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    show (flag) {
+    show(flag) {
         if (this.isClosed) return;
         if (flag !== false) {
             this.tab.classList.add("visible");
@@ -268,11 +273,11 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    hide () {
+    hide() {
         return this.show(false);
     }
 
-    flash (flag) {
+    flash(flag) {
         if (this.isClosed) return;
         if (flag !== false) {
             this.tab.classList.add("flash");
@@ -284,11 +289,11 @@ class Tab extends EventEmitter {
         return this;
     }
 
-    unflash () {
+    unflash() {
         return this.flash(false);
     }
 
-    close (force) {
+    close(force) {
         this.emit("closing", this);
         if (this.isClosed || (!this.closable && !force)) return;
         this.isClosed = true;
@@ -306,12 +311,12 @@ class Tab extends EventEmitter {
 }
 
 const TabPrivate = {
-    initTab: function () {
+    initTab: function() {
         let tabClass = this.tabGroup.options.tabClass;
         // Create tab element
         let tab = this.tab = document.createElement("li");
         tab.classList.add(tabClass);
-        for (let el of ["icon", "title", "buttons", "badge"]) {
+        for (let el of["icon", "title", "buttons", "badge"]) {
             let span = tab.appendChild(document.createElement("span"));
             span.classList.add(`${tabClass}-${el}`);
             this.tabElements[el] = span;
@@ -324,7 +329,7 @@ const TabPrivate = {
         this.tabGroup.tabContainer.appendChild(this.tab);
     },
 
-    initTabButtons: function () {
+    initTabButtons: function() {
         let container = this.tabElements.buttons;
         let tabClass = this.tabGroup.options.tabClass;
         if (this.closable) {
@@ -335,8 +340,8 @@ const TabPrivate = {
         }
     },
 
-    initTabClickHandler: function () {
-        const tabClickHandler = function (e) {
+    initTabClickHandler: function() {
+        const tabClickHandler = function(e) {
             if (this.isClosed) return;
             if (e.which === 2) {
                 this.close();
@@ -344,7 +349,7 @@ const TabPrivate = {
         };
         this.tab.addEventListener("mouseup", tabClickHandler.bind(this), false);
         // Mouse down
-        const tabMouseDownHandler = function (e) {
+        const tabMouseDownHandler = function(e) {
             if (this.isClosed) return;
             if (e.which === 1) {
                 if (e.target.matches("button")) return;
@@ -354,7 +359,7 @@ const TabPrivate = {
         this.tab.addEventListener("mousedown", tabMouseDownHandler.bind(this), false);
     },
 
-    initWebview: function () {
+    initWebview: function() {
         this.webview = document.createElement("li");
         /* const tabWebviewDidFinishLoadHandler = function (e) {
 
@@ -368,34 +373,34 @@ const TabPrivate = {
                 this.webview.setAttribute(key, attrs[key]);
             }
         }
-        if (this.innerhtml){
-            this.webview.innerHTML=this.innerhtml;
+        if (this.innerhtml) {
+            this.webview.innerHTML = this.innerhtml;
         }
         this.tabGroup.viewContainer.appendChild(this.webview);
     }
 };
 
-(function(){
+(function() {
     var tabGroup = new TabGroup({
-        ready: ( tabGroup ) => {
+        ready: (tabGroup) => {
             let homeTab = tabGroup.addTab({
                 title: "Home",
-                icon:"icon icofont-home icofont-lg",
-                divattibute:{
-                    id:"Home",
+                icon: "icon icofont-home icofont-lg",
+                divattibute: {
+                    id: "Home",
                 },
                 visible: true,
-                closable :false ,        
-                ready : (homeTab) => {
+                closable: false,
+                ready: (homeTab) => {
                     let webview = homeTab.webview;
-                    webview.innerHTML=`<section id ="Home"><h1>My First Heading</h1><p>My first paragraph.</p></section>`;
+                    webview.innerHTML = `<section id ="Home"><h1>My First Heading</h1><p>My first paragraph.</p></section>`;
                     homeTab.activate();
-                } 
+                }
             });
             console.log(' Tab Group Is ready ');
         }
     });
-    
+
 })()
 
 //module.exports = tabScheduler;
