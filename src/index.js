@@ -6,12 +6,11 @@
  * 
  */
 
-const path = require('path')
-const configPath = path.join(__dirname,'config.js');
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true;
+
+const path = require('path')
 let mainProcess = require(path.join(__dirname,'mainProcess.js'));
 
-
-Let MainProcess = new mainProcess();
-MainProcess.app();
+let MainProcess = new mainProcess();
+MainProcess.run();
 

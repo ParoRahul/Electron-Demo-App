@@ -1,6 +1,6 @@
 /**
  * coding: utf-8 
- * Created on Fri Aug 03 01:00:00 2019
+ * Created on Fri Aug 20 01:15:00 AM 2019
  * author: Rahul
  * Description: Electrone App MainWindow Process
  * 
@@ -11,7 +11,11 @@ const ipcMain = electron.ipcMain;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const dialog = electron.dialog
-
+/* require('electron-reload')(__dirname, {
+    // Note that the path to electron may vary according to the main file
+    electron: require(`${__dirname}/node_modules/electron`)
+});
+ */
 const path = require('path');
 const url = require('url');
 let interpreter;
@@ -26,118 +30,78 @@ class mainProcess{
             console.log(" ............................................");
             app.quit(); 
         }
-        app.setAppLogsPath(logpath);
         configs = require(path.join(__dirname,'config.js'));
+        app.setAppLogsPath(configs.logpath);
         interpreter = new(require(path.join(__dirname,'locale','interpreter.js')));
     }
 
-    createWindow(id){
-        let window = new BrowserWindow(configs.getWindowCfgById(id));        
-        window.loadURL(url.format({
-                    pathname: path.join(__dirname,'index.html'),
-                    protocol: 'file:',
-                    slashes: true })
-        }).then(()=>{
-           if (config.debug){
-                
-           }
-           window.setContentProtection(true);
-           window.once('ready-to-show', () => {
+    createWindow(id){        
+        let window = new BrowserWindow(configs.getWindowCfgById(id));
+        let scheduler = pageSchudler(id);
+        window.loadURL(html,{
+            baseURLForDataURL:url.format({
+                pathname: scheduler.base_path,
+                protocol: 'file:',
+                slashes: true
+            })
+        })
+        .then(()=>{
+            if (configs.debug){
+               window.openDevTools();
+            }
+            window.setContentProtection(true);
+            window.once('ready-to-show', () => {
             if (window.getTitle() !== 'Confirm-Window')
                 window.show();
-           });
-
-           window.on('unresponsive', () => {
-            console.log(" Ready To show catched");
-           });
-
-           window.on('closed', () => {
-            console.log(" closed event catched");
-            window = null;
-           });
-
-        window.webContents.on('did-fail-load', () => {
-            loadPage(id);
-        });
-      
-        window.webContents.on('crashed', () => {
-            console.log('Your Ember app (or other code) in the main window has crashed.');
-            console.log('This is a serious issue that needs to be handled and/or debugged.');
-        });
-      
-        window.on('unresponsive', () => {
-            console.log('Your Ember app (or other code) has made the window unresponsive.');
-        });
-      
-        window.on('responsive', () => {
-            console.log('The main window has become responsive again.');
-        });
-        
-        return window;
-    }).catch((err)=>{
-       console.err(err);
-     });
-    }
-
-    windowScheduler(scheduler_name,action_name,data={},window = null){
-        //console.log(controller_name,action_name);
-        let scheduler = this.callScheduler(scheduler_name,action_name,data);
-        if(!window) {
-            if (!window_main){
-                window = this.getWindow();
-            }else{
-                window = window_main;
-            }
-        }
-        console.log( 'scheduler.base_path: '+scheduler.base_path+' Action : '+action_name);
-        let openWindow = ()=>{
-            let html = 'data:text/html;charset=UTF-8,'+
-                encodeURIComponent("<script>window.name='"+window.display_name+"';</script>\n"+scheduler.output);
-                console.log( 'loading Window :'+window.display_name);
-                window.loadURL(html,{
-                baseURLForDataURL:url.format({
-                    pathname: scheduler.html_path,
-                    protocol: 'file:',
-                    slashes: true })
             });
-            if(configs.debug){
-               if (configs.debugWindow == 'ALL'){  
-                   window.openDevTools();
-               }
-               else if (configs.debugWindow == window.display_name) {
-                   window.openDevTools();
-               }
-               else{
-                   console.log('Debugger Disabled for Window Name : '+window.display_name );
-               }
-            }
-        };
 
-        if(scheduler.action_result instanceof  Promise){
-            scheduler.action_result.then(()=>{
-                openWindow();
-            })
-        }else{
-            openWindow();
-        }
+            window.on('unresponsive', () => {
+                console.log(" Ready To show catched");
+            });
+
+            window.on('closed', () => {
+                console.log(" closed event catched");
+                window = null;
+            });
+
+            window.webContents.on('did-fail-load', () => {
+                console.log('Your Ember app (or other code) in the main window has crashed.');
+                console.log('This is a serious issue that needs to be handled and/or debugged.');
+                throw new Error('Window Loading Fail');
+            });
+      
+            window.webContents.on('crashed', () => {
+                console.log('Your Ember app (or other code) in the main window has crashed.');
+                console.log('This is a serious issue that needs to be handled and/or debugged.');
+                throw new Error('Window Loading Fail');
+            });
+        
+            window.on('unresponsive', () => {
+                console.log('Your Ember app (or other code) has made the window unresponsive.');
+            });
+        
+            window.on('responsive', () => {
+                console.log('The main window has become responsive again.');
+            });
+            
+            return window;
+        }).catch(err=> console.error(err));
     }
 
-    callScheduler(scheduler_name, action_name, data={}, type="get"){
-        let schedulerCls = require(path.join(__dirname,"resource",scheduler_name,"scheduler.js"));
-        //console.log(scheduler_name);
-        let scheduler = new schedulerCls(scheduler_name);
-        scheduler._interpreter = interpreter;
-        let action_func_name = "action"+action_name;
-        scheduler.setActionName(action_name);
-        //console.log(`action_name ${action_name}`);        
-        scheduler.action_result = scheduler[action_func_name](data);
-        if(scheduler.redirect_url){
-            let {scheduler_name,action_name,query} = this.parseUrl(scheduler.redirect_url);
-            scheduler = this.callScheduler(scheduler_name,action_name,query);
-        }
-        return scheduler
-    } 
+    pageSchudler(id,data={}){
+        return new Promise ( function(resolve,reject){
+            let option = configs.getWindowCfgById(id);
+            let schedulerCls = require(path.join(option.PageDtls.homeDir,"scheduler.js"));
+            let scheduler = new schedulerCls(option.PageDtls.homeDir);
+            scheduler._interpreter = interpreter;
+            let action_func_name = "action"+option.PageDtls.task;
+            scheduler.setActionName(option.PageDtls.task);
+            scheduler.action_result = scheduler[action_func_name](data);
+            
+        });
+    }
 
+    
     run(){
         if(configs.debug){
             app.disableHardwareAcceleration();
@@ -155,24 +119,6 @@ class mainProcess{
                 this.createWindow(id);
             }else{
                 currentWindow.show();
-            }
-        });
-
-        ipcMain.on("$.ajax",(event,{url,data,type,requestId} )=>{
-            let {controller_name,action_name,query} = this.parseUrl(url);
-            console.log(controller_name, action_name);
-            if(typeof data !== "object"){
-                data = {};
-            }
-            Object.assign(data, query);
-            let controller = this.loadController(controller_name,action_name,data,type);
-            if(controller.action_result instanceof  Promise){
-               controller.action_result.then(()=>{
-               event.sender.send('$.ajax.response.'+requestId, {content:controller.output});
-                    return true;
-               })
-            }else{
-                event.sender.send('$.ajax.response.'+requestId, {content:controller.output})
             }
         });
 

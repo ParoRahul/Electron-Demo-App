@@ -30,6 +30,11 @@ let config = {
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker:true,
+            },
+            PageDtls:{
+                homeDir:path.join(__dirname,'init'),
+                task:'Load',
+                page:'index.html'
             }
         }, 
         {
@@ -48,6 +53,32 @@ let config = {
             webPreferences: {
                 nodeIntegration: true,
                 nodeIntegrationInWorker:true,
+            },
+            PageDtls:{
+                homeDir:path.join(__dirname,'main'),
+                task:'Load',
+                page:'index.html'
+            }
+        },
+        {   id:2,
+            title :'Confirm-Window',
+            width: 400,
+            height: 200,
+            alwaysOnTop:true,
+            show:false,
+            modal: true,
+            frame: false,
+            resizable : false,
+            closable : true,
+            useContentSize: true,
+            webPreferences: {
+                nodeIntegration: true,
+                nodeIntegrationInWorker:true,
+            },
+            PageDtls:{
+                homeDir:path.join(__dirname,'main'),
+                task:'Load',
+                page:'index.html'
             }
         }
     ],

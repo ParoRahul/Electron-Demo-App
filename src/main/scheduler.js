@@ -11,7 +11,7 @@ const baseScheduler = require(path.join(__dirname,"..","common","scheduler.js"))
 
 class mainScheduler extends baseScheduler{
     actionLoad(){
-        this.render("index_1");
+        this.render("index");
     }
     
     actionConfirm(){
