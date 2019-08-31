@@ -25,7 +25,7 @@ class baseScheduler {
 
     render(html_name, data = {}) {
         this.output = "";
-        this.html_path = path.join(this.base_path, html_name + ".html");
+        this.html_path = path.join(this.base_path, html_name+".html");
         let html = fs.readFileSync(this.html_path, 'utf-8');
         if (!data.platform) {
             data.platform = process.platform;

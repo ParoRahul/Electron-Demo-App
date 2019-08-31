@@ -1,5 +1,5 @@
-[{
-        "id": 0,
+[   
+    {
         "title": "Init_Window",
         "width": 600,
         "height": 350,
@@ -20,7 +20,6 @@
         }
     },
     {
-        "id": 1,
         "title": "Main_Window",
         "width": 1460,
         "height": 800,
@@ -43,7 +42,6 @@
         }
     },
     {
-        "id": 2,
         "title": "Confirm-Window",
         "width": 400,
         "height": 200,

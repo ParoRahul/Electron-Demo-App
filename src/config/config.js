@@ -23,7 +23,7 @@ class config {
         this.windowConfigFile = path.join(__dirname, 'windowConfig.json');
         this.menuConfig = null;
         this.windowConfig = [];
-        this.initWindowId = 0;
+        this.initWindowtitle = "Init_Window";
         this.loadMenuConfig();
         this.loadWindowConfig();
         this.dbCfg = {
@@ -50,19 +50,9 @@ class config {
         }) */
     }
 
-    getWindowCfgById(id) {
-        return this.windowConfig.find(wincfg => wincfg.id == id)
-    }
-
     getWindowCfgByTitle(title) {
         return this.windowConfig.find(wincfg => wincfg.title == title)
     }
-
-    getWindowTitleById(id) {
-        return this.windowConfig.find(wincfg => wincfg.id == id).title
-    }
-
-    
 
 }
 

@@ -2,18 +2,18 @@
  * coding: utf-8 
  * Created on Fri Aug 03 01:15:00 2019
  * author: Rahul
- * Description: Init Html Loader Process
+ * Description: Init page Loader Process
  * 
  */
 
 const path = require('path');
-const baseScheduler = require(path.join(__dirname,"..","common","scheduler.js"));
+const baseScheduler = require(path.join(__dirname, "..", "scheduler.js"));
 //const PluginManager = require(path.join(__dirname,"pluginManager.js")); 
 //const ProjectCache = require(path.join(__dirname,"ProjectCache.js"));
 
 class initScheduler extends baseScheduler{
     actionLoad(){
-        let packJson = require(path.join(__dirname,"..","..","..","package.json"));
+        let packJson = require(path.join(__dirname,"..","..","package.json"));
         let version = packJson.version;
         this.render("index",{app_version:version});
     }

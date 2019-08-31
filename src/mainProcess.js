@@ -20,6 +20,7 @@ const path = require('path');
 const url = require('url');
 let interpreter;
 let configs;
+let windowList;
 
 class mainProcess {
     constructor() {
@@ -30,84 +31,102 @@ class mainProcess {
             console.log(" ............................................");
             app.quit();
         }
+        
         configs = require(path.join(__dirname,'config','config.js'));
         app.setAppLogsPath(configs.logpath);
         interpreter = new(require(path.join(__dirname, 'locale', 'interpreter.js')));
+        this.windowList = [];
     }
 
-    createWindow(id) {
-        let window = new BrowserWindow(configs.getWindowCfgById(id));
-        /* window.loadURL(url.format({
-            protocol: 'file',
-            slashes: true,
-            pathname: path.join(__dirname, 'main', 'index.html')
-        })).then(() => { */
-        window.setContentProtection(true);
-        window.once('ready-to-show', () => {
-            if (window.getTitle() !== 'Confirm-Window')
-                window.show();
-        });
-
-        window.on('unresponsive', () => {
-            console.log(" Ready To show catched");
-        });
-
-        window.on('closed', () => {
-            console.log(" closed event catched");
-            window = null;
-        });
-
-        window.webContents.on('did-fail-load', () => {
-            console.log('Your Ember app (or other code) in the main window has crashed.');
-            console.log('This is a serious issue that needs to be handled and/or debugged.');
-            throw new Error('Window Loading Fail');
-        });
-
-        window.webContents.on('crashed', () => {
-            console.log('Your Ember app (or other code) in the main window has crashed.');
-            console.log('This is a serious issue that needs to be handled and/or debugged.');
-            throw new Error('Window Loading Fail');
-        });
-
-        window.on('unresponsive', () => {
-            console.log('Your Ember app (or other code) has made the window unresponsive.');
-        });
-
-        window.on('responsive', () => {
-            console.log('The main window has become responsive again.');
-        });
-        
+    getWindowIdByTitle(title) {
+        let winObj = this.windowList.find(winObj => winObj.title == title);
+        return winObj?winObj.id:0;
     }
 
-    loadPage(id, data = {}) {
-        let option = configs.getWindowCfgById(id);
+    createWindow(winTitle) {
+        return new Promise( function(resolve,reject){
+            try{
+                let window = new BrowserWindow(configs.getWindowCfgByTitle(winTitle));
+                if ( window == null ){
+                    throw new error(' Window is null') 
+                }
+                
+                window.setContentProtection(true);
+                window.once('ready-to-show', () => {
+                    if (window.getTitle() !== 'Confirm-Window')
+                        window.show();
+                });
+
+                window.on('unresponsive', () => {
+                    console.log(" Ready To show catched");
+                });
+
+                window.on('closed', () => {
+                    console.log(" closed event catched");
+                    window = null;
+                });
+
+                window.webContents.on('did-fail-load', () => {
+                    console.log('Your Ember app (or other code) in the main window has crashed.');
+                    console.log('This is a serious issue that needs to be handled and/or debugged.');
+                    throw new Error('Window Loading Fail');
+                });
+
+                window.webContents.on('crashed', () => {
+                    console.log('Your Ember app (or other code) in the main window has crashed.');
+                    console.log('This is a serious issue that needs to be handled and/or debugged.');
+                    throw new Error('Window Loading Fail');
+                });
+
+                window.on('unresponsive', () => {
+                    console.log('Your Ember app (or other code) has made the window unresponsive.');
+                });
+
+                window.on('responsive', () => {
+                    console.log('The main window has become responsive again.');
+                });
+                resolve(window);
+            }
+            catch(err) {
+                reject(err);
+            }
+        });
+    }
+
+    loadPage(window) {
+        if ( window == null ){
+            console.error('Window object is null');
+            throw new Error('Window object is null');
+        }
+        let option = configs.getWindowCfgByTitle(window.getTitle());
+        /* console.log(`window.id ${window.getTitle()}`)
+        console.log(option); */
         let schedulerCls = require(path.join(__dirname,option.pageDtls.scheduler,"scheduler.js"));
         let scheduler = new schedulerCls(option.pageDtls.scheduler);
         //console.log(` scheduler.base_path ${scheduler.base_path}`);
         scheduler._interpreter = interpreter;
         let action_func_name = "action" + option.pageDtls.task;
         scheduler.setActionName(option.pageDtls.task);
-        scheduler.action_result = scheduler[action_func_name](data);
+        scheduler.action_result = scheduler[action_func_name]({});
         //console.log(` scheduler.output ${scheduler.output}`);
         let html = 'data:text/html;charset=UTF-8,' +
             encodeURIComponent("<script>window.name='" + option.title + "';</script>\n" + scheduler.output);
-        let window = BrowserWindow.fromId(id);
+        //let window = BrowserWindow.fromId(id);        
         window.loadURL(html, {
             baseURLForDataURL: url.format({
-                pathname: scheduler.html_path,
-                protocol: 'file:',
-                slashes: true
+            pathname: scheduler.html_path,
+            protocol: 'file:',
+            slashes: true
             })
         }).then(()=>{
             if (configs.debug) {
                 window.openDevTools();
             }
-        }).catch(()=>{
-            console.error('Window Loading Fail');
-            throw new Error('Window Loading Fail');
+            this.windowList.push({'title':window.getTitle(),'id':window.id});
+        }).catch((err)=>{
+            console.error(err);
         });
     }
-
 
     run() {
         if (configs.debug) {
@@ -115,57 +134,70 @@ class mainProcess {
         }
         // Commant out thos line for windows low configuration
         // app.disableHardwareAcceleration();
+        
         app.on('ready', () => {
-            if (BrowserWindow.fromId(1) == null) {
-                this.createWindow(1);
-                this.loadPage(1,{})
-            }
+            let initWinTitle = configs.initWindowtitle;
+            console.log(`initWinTitle : ${initWinTitle}`);
+            this.createWindow(initWinTitle).then((window)=>{
+                this.loadPage(window);
+            //}).then(()=>{    
+            //    this.windowList.push({'title':initWinTitle,'id':window.id});
+            }).catch((err)=>{
+               console.log(err);
+            })
         });
 
-        ipcMain.on('window.open', (event, { id, parent_id }) => {
-            let currentWindow = BrowserWindow.fromId(id);
-            if (currentWindow == null) {
-                this.createWindow(id);
-            } else {
+        ipcMain.on('window.open', (event, { windowTitle, parent_id }) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
+            if (currentWindow != null){
                 currentWindow.show();
             }
+            else{
+                this.createWindow(windowTitle).then((window)=>{
+                    this.loadPage(window)
+                //}).then(()=>{
+                //    this.windowList.push({'title':windowTitle,'id':window.id});
+                }).catch((err)=>{
+                    console.log(err)
+                });                 
+            }
         });
 
-        ipcMain.on('window.close', (event, id) => {
-            let currentWindow = BrowserWindow.fromId(id);
+        ipcMain.on('window.close', (event, windowTitle) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null)
                 currentWindow.close()
         });
 
-        ipcMain.on('window.exist', (event, id) => {
-            let currentWindow = BrowserWindow.fromId(id);
+        ipcMain.on('window.exist', (event, windowTitle) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null)
                 event.returnValue = true;
             else
                 event.returnValue = false;
         });
 
-        ipcMain.on('window.hide', (event, id) => {
-            let currentWindow = BrowserWindow.fromId(id);
+        ipcMain.on('window.hide', (event, windowTitle) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null)
                 currentWindow.hide();
         });
 
-        ipcMain.on('window.show', (event, id) => {
-            let currentWindow = BrowserWindow.fromId(id);
+        ipcMain.on('window.show', (event, windowTitle) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null)
                 currentWindow.show();
         });
 
         ipcMain.on('window.triggerEvent', (event, { eventName, targetWindow, args }) => {
-            let currentWindow = BrowserWindow.fromId(id);
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null) {
                 currentWindow.webContents.send("window.addEventListener." + eventName, args);
             }
         });
 
-        ipcMain.on('dialog.Show', (event, { id, requestId, eventName }) => {
-            let currentWindow = BrowserWindow.fromId(id);
+        ipcMain.on('dialog.Show', (event, { windowTitle, requestId, eventName }) => {
+            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null) {
                 dialog.showOpenDialog(win, config.getWindowCfgById(id),
                     function(result) {
