@@ -7,8 +7,7 @@ Kindly install [node.js](https://nodejs.org/en/download/) before running this ap
 [path Variable](https://stackoverflow.com/questions/27864040/fixing-npm-path-in-windows-8-and-10/27864331) Accordingly.
 
 * Clone this repository or download it in local directory.
-* open cmd from same directory run **npm install** , this will complete building the app in your local. Kindly note this is one time 
-  activity.
+* open cmd point to  same directory run **npm install** 
   ```bash
   $ npm install 
   ```
