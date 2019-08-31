@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" class="{{platform}}">
+    <head>
+        <meta charset="UTF-8">
+        
+        <link rel="stylesheet" type="text/css" href="./init.css">
+    </head>
+    <body id="init-page">
+        <div class="content-wrapper">
+            <div class="title">{{locales.app_name}}</div>
+            <div class="version">{{locales.app_version}} v{{app_version}}</div> 
+            <div class="message">{{locales.init_page_loading}}</div>
+            <div class="loader-text"></div>
+        </div>
+        <footer class="dialog-footer">
+            <div class="copyright">
+                <i class="icofont-copyright icofont-lg">{{locales.copy_right_text}}</i>
+            </div>
+        </footer>
+        <script>window.$ = require("jquery");</script>
+        <script>window.interpreter = new(require('../../locale/interpreter.js'));</script>
+        <script src = '../../rendererProcess.js'></script>
+        <script src = './initModule.js'></script>
+    </body>
+</html>

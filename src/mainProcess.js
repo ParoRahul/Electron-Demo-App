@@ -11,11 +11,11 @@ const ipcMain = electron.ipcMain;
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const dialog = electron.dialog
-    /* require('electron-reload')(__dirname, {
-        // Note that the path to electron may vary according to the main file
-        electron: require(`${__dirname}/node_modules/electron`)
+/* require('electron-reload')(__dirname, {
+    //Note that the path to electron may vary according to the main file
+    electron: require(`${__dirname}/node_modules/electron`)
     });
-     */
+*/
 const path = require('path');
 const url = require('url');
 let interpreter;
@@ -30,100 +30,95 @@ class mainProcess {
             console.log(" ............................................");
             app.quit();
         }
-        configs = require(path.join(__dirname, 'config.js'));
+        configs = require(path.join(__dirname,'config','config.js'));
         app.setAppLogsPath(configs.logpath);
         interpreter = new(require(path.join(__dirname, 'locale', 'interpreter.js')));
     }
 
     createWindow(id) {
         let window = new BrowserWindow(configs.getWindowCfgById(id));
-
         /* window.loadURL(url.format({
             protocol: 'file',
             slashes: true,
             pathname: path.join(__dirname, 'main', 'index.html')
         })).then(() => { */
-        this.pageScheduler(id).then(() => {
+        window.setContentProtection(true);
+        window.once('ready-to-show', () => {
+            if (window.getTitle() !== 'Confirm-Window')
+                window.show();
+        });
+
+        window.on('unresponsive', () => {
+            console.log(" Ready To show catched");
+        });
+
+        window.on('closed', () => {
+            console.log(" closed event catched");
+            window = null;
+        });
+
+        window.webContents.on('did-fail-load', () => {
+            console.log('Your Ember app (or other code) in the main window has crashed.');
+            console.log('This is a serious issue that needs to be handled and/or debugged.');
+            throw new Error('Window Loading Fail');
+        });
+
+        window.webContents.on('crashed', () => {
+            console.log('Your Ember app (or other code) in the main window has crashed.');
+            console.log('This is a serious issue that needs to be handled and/or debugged.');
+            throw new Error('Window Loading Fail');
+        });
+
+        window.on('unresponsive', () => {
+            console.log('Your Ember app (or other code) has made the window unresponsive.');
+        });
+
+        window.on('responsive', () => {
+            console.log('The main window has become responsive again.');
+        });
+        
+    }
+
+    loadPage(id, data = {}) {
+        let option = configs.getWindowCfgById(id);
+        let schedulerCls = require(path.join(__dirname,option.pageDtls.scheduler,"scheduler.js"));
+        let scheduler = new schedulerCls(option.pageDtls.scheduler);
+        //console.log(` scheduler.base_path ${scheduler.base_path}`);
+        scheduler._interpreter = interpreter;
+        let action_func_name = "action" + option.pageDtls.task;
+        scheduler.setActionName(option.pageDtls.task);
+        scheduler.action_result = scheduler[action_func_name](data);
+        //console.log(` scheduler.output ${scheduler.output}`);
+        let html = 'data:text/html;charset=UTF-8,' +
+            encodeURIComponent("<script>window.name='" + option.title + "';</script>\n" + scheduler.output);
+        let window = BrowserWindow.fromId(id);
+        window.loadURL(html, {
+            baseURLForDataURL: url.format({
+                pathname: scheduler.html_path,
+                protocol: 'file:',
+                slashes: true
+            })
+        }).then(()=>{
             if (configs.debug) {
                 window.openDevTools();
             }
-            window.setContentProtection(true);
-            window.once('ready-to-show', () => {
-                if (window.getTitle() !== 'Confirm-Window')
-                    window.show();
-            });
-
-            window.on('unresponsive', () => {
-                console.log(" Ready To show catched");
-            });
-
-            window.on('closed', () => {
-                console.log(" closed event catched");
-                window = null;
-            });
-
-            window.webContents.on('did-fail-load', () => {
-                console.log('Your Ember app (or other code) in the main window has crashed.');
-                console.log('This is a serious issue that needs to be handled and/or debugged.');
-                throw new Error('Window Loading Fail');
-            });
-
-            window.webContents.on('crashed', () => {
-                console.log('Your Ember app (or other code) in the main window has crashed.');
-                console.log('This is a serious issue that needs to be handled and/or debugged.');
-                throw new Error('Window Loading Fail');
-            });
-
-            window.on('unresponsive', () => {
-                console.log('Your Ember app (or other code) has made the window unresponsive.');
-            });
-
-            window.on('responsive', () => {
-                console.log('The main window has become responsive again.');
-            });
-
-            return window;
-
-        }).catch(err => console.error(err));
-    }
-
-    pageScheduler(id, data = {}) {
-        return new Promise(function(resolve, reject) {
-            let option = configs.getWindowCfgById(id);
-            let schedulerCls = require(path.join(__dirname,option.pageDtls.scheduler,"scheduler.js"));
-            let scheduler = new schedulerCls(option.pageDtls.scheduler);
-            //console.log(` scheduler.base_path ${scheduler.base_path}`);
-            scheduler._interpreter = interpreter;
-            let action_func_name = "action" + option.pageDtls.task;
-            scheduler.setActionName(option.pageDtls.task);
-            scheduler.action_result = scheduler[action_func_name](data);
-            //console.log(` scheduler.output ${scheduler.output}`);
-            let html = 'data:text/html;charset=UTF-8,' +
-                encodeURIComponent("<script>window.name='" + option.title + "';</script>\n" + scheduler.output);
-            let window = BrowserWindow.fromId(id);
-            window.loadURL(html, {
-                baseURLForDataURL: url.format({
-                    pathname: scheduler.html_path,
-                    protocol: 'file:',
-                    slashes: true
-                })
-            }).then(() => {
-                resolve();
-            }).catch(() => {
-                reject();
-            })
+        }).catch(()=>{
+            console.error('Window Loading Fail');
+            throw new Error('Window Loading Fail');
         });
     }
 
 
     run() {
-        /*  if (configs.debug) {
+        if (configs.debug) {
              app.disableHardwareAcceleration();
-         } */
-        app.disableHardwareAcceleration();
+        }
+        // Commant out thos line for windows low configuration
+        // app.disableHardwareAcceleration();
         app.on('ready', () => {
             if (BrowserWindow.fromId(1) == null) {
                 this.createWindow(1);
+                this.loadPage(1,{})
             }
         });
 

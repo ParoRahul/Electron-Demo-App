@@ -1,0 +1,45 @@
+.tabbar{
+    position: relative;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.tabsview{
+    position: relative;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.tabContainer{
+    display: block;
+    position: absolute;
+    height: 32px;
+    width: 100%;
+    background-color: var(--tabbar);
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.viewContainer{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--tabview);
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+}
+
+.tab-head{
+    visibility: hidden;
+    display:block;
+    float:left;
+}
+
+.tab-view{
+    position: relative;
+}
