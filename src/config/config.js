@@ -23,7 +23,7 @@ class config {
         this.windowConfigFile = path.join(__dirname, 'windowConfig.json');
         this.menuConfig = null;
         this.windowConfig = [];
-        this.initWindowtitle = "Init_Window";
+        this.initWindowtitle = "Main_Window";
         this.loadMenuConfig();
         this.loadWindowConfig();
         this.dbCfg = {
