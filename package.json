@@ -1,13 +1,13 @@
 {
   "name": "groot",
   "version": "1.0.0",
-  "description": "Basic Electron buliding block to start any electron project",
+  "description": "Basic Electron building blocks to start any electron project",
   "main": "src/index.js",
   "scripts": {
     "start": "electron .",
     "test": "node src/config/testconfig.js"
   },
-  "keywords": [],
+  "keywords": [ "Multiple Window","Single Instance","Crash Handling","CSS grid"],
   "author": "Rahul",
   "license": "ISC",
   "devDependencies": {

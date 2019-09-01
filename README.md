@@ -1,5 +1,5 @@
 # Groot
-Basic Electron buliding block to start any electron project   :grimacing:
+Basic Electron building blocks to start any electron project   :grimacing:
 ![Project Layout](src/Asset/image/Project_layout.png)
 
 
