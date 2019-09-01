@@ -4,6 +4,6 @@
 * Status Bar 
 * Menus 
 
-*all read marking are todo*
+*all red marking are todo*
 ![todo list](src/asset/image/todo.png)
 
