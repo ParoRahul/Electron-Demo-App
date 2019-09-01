@@ -1,6 +1,6 @@
 # Groot
 Basic Electron buliding block to start any electron project :grimacing:
-![Project Layout](src/asset/image/Project_layout.png)
+![Project Layout](src/Asset/image/Project_layout.png)
 
 
 ### Installation  
