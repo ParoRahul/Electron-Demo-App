@@ -1,7 +1,7 @@
 {
   "name": "groot",
   "version": "1.0.0",
-  "description": "Small scale accounting software for sales and parches management",
+  "description": "Basic Electron buliding block to start any electron project",
   "main": "src/index.js",
   "scripts": {
     "start": "electron .",

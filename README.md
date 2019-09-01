@@ -19,7 +19,7 @@ Kindly install [node.js](https://nodejs.org/en/download/) before running this ap
 
 ### Features
   * Multi Window
-  * Single Instance
+  * Single Instance App
   * Crash Handling
   * CSS Grid 
   
