@@ -19,11 +19,11 @@ Kindly install [node.js](https://nodejs.org/en/download/) before running this ap
 
 ### Features
   * Multi Window :
-    * Refer RendererProcess.js Line no 140 - 170* 
+    * Refer RendererProcess.js Line no 140 - 170 
   * Single Instance App :
-    * Refer mainProcess.js Line no 27 - 34* 
+    * Refer mainProcess.js Line no 27 - 34 
   * Crash Handling :
-    * Refer mainProcess.js createWindow Method* 
+    * Refer mainProcess.js createWindow Method 
   * CSS Grid  :
-    * Refer src/main/css/style.css*
+    * Refer src/main/css/style.css
   
