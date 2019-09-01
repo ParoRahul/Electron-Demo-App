@@ -1,5 +1,6 @@
 # Groot
 Basic Electron buliding block to start any electron project :grimacing:
+![Layout](./src/asset/image/Project_layout.png)
 
 
 ### Installation  
@@ -15,3 +16,10 @@ Kindly install [node.js](https://nodejs.org/en/download/) before running this ap
   ```bash
   $ npm start
   ```
+
+  ### Features
+  * Multi Window
+  * Single Instance
+  * Crash Handling
+  * CSS Grid 
+  
