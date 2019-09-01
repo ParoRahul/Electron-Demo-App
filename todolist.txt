@@ -1,2 +1,0 @@
-Title Bar, Side tool bar , status Bar , senus and main section of the page needs to be created
-
