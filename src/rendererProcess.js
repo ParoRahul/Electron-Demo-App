@@ -120,18 +120,21 @@ $(function() {
             return false;
         }
     });
- */
+    */
     $('.btn-minimize').on('click', () => {
         currentWin.minimize();
     });
 
     $('.btn-resize').on("click", function() {
-        if (this.innerHTML=="filter_none") {
+        console.log(` Window Current state ${this.innerHTML}`)
+        if (currentWin.isMaximized()) {
             currentWin.unmaximize();
-            this.innerHTML='crop_din'
+            this.innerHTML='crop_din';
+            console.log(` Window Current state ${this.innerHTML}`)
         } else {
             currentWin.maximize()
-            this.innerHTML='filter_none'
+            this.innerHTML='filter_none';
+            console.log(` Window Current state ${this.innerHTML}`)
         }
     });
 

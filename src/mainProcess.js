@@ -50,8 +50,8 @@ class mainProcess {
                 if ( window == null ){
                     throw new error(' Window is null') 
                 }
-                
-                window.setContentProtection(true);
+                // Screen Shot Prevention 
+                //window.setContentProtection(true);
                 window.once('ready-to-show', () => {
                     if (window.getTitle() !== 'Confirm-Window')
                         window.show();
