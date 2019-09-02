@@ -163,28 +163,28 @@ class mainProcess {
             }
         });
 
-        ipcMain.on('window.close', (event, windowTitle) => {
-            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
+        ipcMain.on('window.close', (event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
             if (currentWindow != null)
                 currentWindow.close()
         });
 
-        ipcMain.on('window.exist', (event, windowTitle) => {
-            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
+        ipcMain.on('window.exist', (event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
             if (currentWindow != null)
                 event.returnValue = true;
             else
                 event.returnValue = false;
         });
 
-        ipcMain.on('window.hide', (event, windowTitle) => {
-            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
+        ipcMain.on('window.hide', (event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
             if (currentWindow != null)
                 currentWindow.hide();
         });
 
-        ipcMain.on('window.show', (event, windowTitle) => {
-            let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
+        ipcMain.on('window.show', (event, id) => {
+            let currentWindow = BrowserWindow.fromId(id);
             if (currentWindow != null)
                 currentWindow.show();
         });

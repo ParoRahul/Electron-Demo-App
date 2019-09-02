@@ -7,3 +7,4 @@
 *all red marking are todo*
 ![todo list](src/asset/image/todo.png)
 
+* window Resize Needs To be fixed

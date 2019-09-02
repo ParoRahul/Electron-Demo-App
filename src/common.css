@@ -1,20 +1,16 @@
-@import url("./Asset/icofont/icofont.css");
 :root {
-    --toolbar:#262626;
-    --toolbarhover:#464646;
-    --titlebar: #363636; 
+    --toolbar:#363636;
+    --titlebar: #262626; 
     --titlebarhover:#565656;
     --statusbar:#2c3e50;
-    --tabbar:#afbf1f;
+    --tabbar:#afafaf;
     --tabview:#f0f0f0;
-    --bghover:#336566;
     --text: #fff;
     --danger:#ce5656;
-    --balck:#000;
-    --tool-bar-width: 60px;
+    --tool-bar-width: 44px;
     --title-bar-height: 30px;
     --footer-height: 20px;
-    --tab-bar-height: 32px;
+    --tab-bar-height: 25px;
 }   
 
 *{

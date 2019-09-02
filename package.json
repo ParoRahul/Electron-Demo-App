@@ -7,7 +7,12 @@
     "start": "electron .",
     "test": "node src/config/testconfig.js"
   },
-  "keywords": [ "Multiple Window","Single Instance","Crash Handling","CSS grid"],
+  "keywords": [
+    "Multiple Window",
+    "Single Instance",
+    "Crash Handling",
+    "CSS grid"
+  ],
   "author": "Rahul",
   "license": "ISC",
   "devDependencies": {

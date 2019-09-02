@@ -28,19 +28,17 @@ body {
 .itembar{
     grid-row: 2/4;
     grid-column: 2/3;
-    background-color: #756;
+    background-color: #f8f8f8;
 }
 
 .tabbar{
     grid-row: 2/3;
     grid-column: 3/4;
-    
 }
 
 .tabsview{
     grid-row: 3/4;
     grid-column: 3/4;
-    
 }
 
 .footer{

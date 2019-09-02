@@ -114,25 +114,28 @@ rendererObj.ipcRenderer = ipcRenderer;
 $(function() {
     rendererObj._init();
 
-    $(".btn").on("click", function(event) {
+    /* $(".btn").on("click", function(event) {
         if ($(this).attr("disabled")) {
             event.stopImmediatePropagation();
             return false;
         }
     });
-
-    $('.nevwindow').on('click', '.btn-minimize', () => {
+ */
+    $('.btn-minimize').on('click', () => {
         currentWin.minimize();
-    }).on("click", ".btn-resize", function() {
-        var $this = $(this);
-        $this.find('i').toggleClass('icofont-maximize').toggleClass('icofont-resize')
-        if ($this.find('i').is('.icofont-maximize')) {
-            currentWin.unmaximize()
+    });
+
+    $('.btn-resize').on("click", function() {
+        if (this.innerHTML=="filter_none") {
+            currentWin.unmaximize();
+            this.innerHTML='crop_din'
         } else {
             currentWin.maximize()
+            this.innerHTML='filter_none'
         }
-    }).on('click', '.btn-exit', (ev) => {
-        console.log('Return Log');
+    });
+
+    $('.btn-exit').on('click', (ev) => {
         let id = currentWin.id;
         rendererObj.close(id);
     });

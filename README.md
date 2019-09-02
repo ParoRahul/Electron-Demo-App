@@ -24,6 +24,3 @@ Kindly install [node.js](https://nodejs.org/en/download/) before running this ap
     * Refer mainProcess.js Line no 27 - 34 
   * **Crash Handling :**
     * Refer mainProcess.js createWindow Method 
-  * **CSS Grid  :**
-    * Refer src/main/css/style.css
-  
