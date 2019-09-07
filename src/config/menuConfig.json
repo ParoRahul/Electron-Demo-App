@@ -3,18 +3,18 @@
     "menuClass": "parent",
     "subMenuclass": "child",
     "menu": [{
-            "label": "item1",
+            "label": "file",
             "role": "file",
             "submenu": [{
-                    "label": "item11",
-                    "role": "new"
+                    "label": "Open file...",
+                    "role": "newimage"
                 },
                 {
                     "type": "separator"
                 },
                 {
-                    "label": "item12",
-                    "role": "importList",
+                    "label": "Folder",
+                    "role": "Open Folder...",
                     "submenu": [{
                             "label": "item121",
                             "role": "import_file",

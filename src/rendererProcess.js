@@ -81,11 +81,11 @@ rendererObj = {
         ipcRenderer.send("window.show", { features: features })
     },
 
-    dialogshow: function(name, features, requestId, eventName) {
+    dialogshow: function(windowTitle, features, requestId, eventName) {
         if (typeof name === "undefined") {
-            name = window.name;
+            windowTitle = window.name;
         }
-        ipcRenderer.send("dialog.Show", { name, features, requestId, eventName });
+        ipcRenderer.send("dialog.Show", { windowTitle, features, requestId, eventName });
     },
 
     once: function(eventName, callback) {

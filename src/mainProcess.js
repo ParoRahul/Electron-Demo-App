@@ -196,14 +196,14 @@ class mainProcess {
             }
         });
 
-        ipcMain.on('dialog.Show', (event, { windowTitle, requestId, eventName }) => {
+        ipcMain.on('dialog.Show', (event, { windowTitle, features, requestId, eventName }) => {
             let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null) {
-                dialog.showOpenDialog(win, config.getWindowCfgById(id),
-                    function(result) {
-                        console.log(result);
-                        currentWindow.webContents.send("window.addEventListener." + eventName, { requestId, result });
-                    });
+                dialog.showOpenDialog(currentWindow,features).then(result => {
+                    event.reply("window.addEventListener." + eventName,{ requestId, result });
+                }).catch(err => {
+                    event.reply("window.addEventListener." + eventName,{ requestId });
+                });
             }
         });
 
