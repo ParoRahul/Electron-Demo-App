@@ -2,7 +2,7 @@
  * coding: utf-8 
  * Created on Fri Oct 26 18:58:45 2018
  * author: 683898
- * Description: Rendrer Process for All window 
+ * Description: Common Rendrer Process for All window 
  */
 
 const { ipcRenderer, remote, shell } = require('electron');
@@ -10,6 +10,7 @@ let currentWin = remote.getCurrentWindow();
 
 const Menu = remote.Menu;
 const MenuItem = remote.MenuItem;
+const dialog = remote.dialog;
 const nativeImage = remote.nativeImage;
 
 var IPCResponse = function() {};
@@ -81,11 +82,31 @@ rendererObj = {
         ipcRenderer.send("window.show", { features: features })
     },
 
-    dialogshow: function(windowTitle, features, requestId, eventName) {
+    dialogshow_depricated: function(windowTitle, features, requestId, eventName) {
         if (typeof name === "undefined") {
             windowTitle = window.name;
         }
         ipcRenderer.send("dialog.Show", { windowTitle, features, requestId, eventName });
+    },
+
+    dialogOpen:function (features){
+        return new Promise (function(resolve, reject){
+            dialog.showOpenDialog(features).then(result => {
+                resolve(result);
+            }).catch(err => {
+                reject(err);
+            })
+        })
+    },
+
+    dialogSave:function (features){
+        return new Promise (function(resolve, reject){
+            dialog.showSaveDialog(features).then(result => {
+                resolve(result);
+            }).catch(err => {
+                reject(err);
+            })
+        })
     },
 
     once: function(eventName, callback) {
