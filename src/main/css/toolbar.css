@@ -25,6 +25,7 @@
     font-size: 30px;
     color : #999;
     padding: 7px;
+    cursor: pointer;
 }
 
 .toolbar .material-icons:hover{

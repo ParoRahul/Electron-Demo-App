@@ -42,6 +42,10 @@ rendererObj = {
         ipcRenderer.send("window.close", id)
     },
 
+    open: function(windowTitle) {
+        ipcRenderer.send("window.open", {windowTitle})
+    },
+
     post(url, data, callback) {
         if (typeof data == "function") {
             callback = data;
@@ -147,15 +151,12 @@ $(function() {
     });
 
     $('.btn-resize').on("click", function() {
-        console.log(` Window Current state ${this.innerHTML}`)
         if (currentWin.isMaximized()) {
             currentWin.unmaximize();
             this.innerHTML='crop_din';
-            console.log(` Window Current state ${this.innerHTML}`)
         } else {
             currentWin.maximize()
             this.innerHTML='filter_none';
-            console.log(` Window Current state ${this.innerHTML}`)
         }
     });
 

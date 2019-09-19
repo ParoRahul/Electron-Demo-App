@@ -1,6 +1,6 @@
 # Groot
 Basic Electron building blocks to start any electron project   :grimacing:
-![Project Layout](src/asset/image/Project_layout.png)
+![Application Demo](src/asset/app_dmo.gif)
 
 
 ### Installation  

@@ -1,0 +1,31 @@
+.titlebar{    
+    background-color: var(--titlebar);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title{
+    flex-grow: 1;
+    display: inline;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: 100;
+    color: var(--text);
+    line-height: 30px;
+    text-align: center;
+}
+
+.btn-exit {
+    font-size: 20px;
+    padding:5px 7px;
+    color:#bbb; 
+}
+
+
+.btn-exit:hover{
+    background-color: var(--danger);
+    border:1px solid var(--danger);
+    color:#fff;
+}

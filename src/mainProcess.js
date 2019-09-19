@@ -107,6 +107,7 @@ class mainProcess {
         scheduler._interpreter = interpreter;
         let action_func_name = "action" + option.pageDtls.task;
         scheduler.setActionName(option.pageDtls.task);
+        console.log(` action_func_name ${action_func_name}`)
         scheduler.action_result = scheduler[action_func_name]({});
         //console.log(` scheduler.output ${scheduler.output}`);
         let html = 'data:text/html;charset=UTF-8,' +
@@ -147,7 +148,7 @@ class mainProcess {
             })
         });
 
-        ipcMain.on('window.open', (event, { windowTitle, parent_id }) => {
+        ipcMain.on('window.open', (event, { windowTitle }) => {
             let currentWindow = BrowserWindow.fromId(this.getWindowIdByTitle(windowTitle));
             if (currentWindow != null){
                 currentWindow.show();
@@ -155,8 +156,6 @@ class mainProcess {
             else{
                 this.createWindow(windowTitle).then((window)=>{
                     this.loadPage(window)
-                //}).then(()=>{
-                //    this.windowList.push({'title':windowTitle,'id':window.id});
                 }).catch((err)=>{
                     console.log(err)
                 });                 

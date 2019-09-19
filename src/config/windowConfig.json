@@ -62,5 +62,71 @@
             "task": "Load",
             "page": "index.html"
         }
+    },
+    {
+        "title": "Manage_User",
+        "width": 300,
+        "height": 400,
+        "alwaysOnTop": true,
+        "show": false,
+        "modal": true,
+        "frame": false,
+        "resizable": false,
+        "closable": true,
+        "useContentSize": true,
+        "skipTaskbar": false,
+        "webPreferences": {
+            "nodeIntegration": true,
+            "nodeIntegrationInWorker": true
+        },
+        "pageDtls": {
+            "scheduler": "users",
+            "task": "Load",
+            "page": "index.html"
+        }
+    },
+    {
+        "title": "Signin_User",
+        "width": 600,
+        "height": 400,
+        "alwaysOnTop": true,
+        "show": false,
+        "modal": true,
+        "frame": false,
+        "resizable": false,
+        "closable": true,
+        "useContentSize": true,
+        "skipTaskbar": false,
+        "webPreferences": {
+            "nodeIntegration": true,
+            "nodeIntegrationInWorker": true
+        },
+        "pageDtls": {
+            "scheduler": "users",
+            "task": "Signin",
+            "page": "signin.html"
+        }
+    },
+    {
+        "title": "Settings",
+        "width": 600,
+        "height": 400,
+        "alwaysOnTop": true,
+        "show": false,
+        "modal": true,
+        "frame": false,
+        "resizable": false,
+        "closable": true,
+        "useContentSize": true,
+        "skipTaskbar": false,
+        "webPreferences": {
+            "nodeIntegration": true,
+            "nodeIntegrationInWorker": true
+        },
+        "pageDtls": {
+            "scheduler": "settings",
+            "task": "Load",
+            "page": "index.html"
+        }
     }
 ]
