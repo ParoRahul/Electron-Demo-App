@@ -15,7 +15,9 @@
     });
 
     config.upperToolbar.forEach(function(mitem) {
-        $(".upper-toolbar").append(`<li class=${mitem.id}>
+        $(".upper-toolbar").append(`<li class=${mitem.id} data-toggle="tooltip" 
+                                                          data-placement="right" 
+                                                          title=${mitem.title}>
                                         <i class="material-icons">${mitem.icon}</i>
                                     </li>`);
         $(".upper-toolbar").on("click", `li.${mitem.id}` , function(event) {
@@ -23,9 +25,11 @@
             event.stopImmediatePropagation;
         });                            
     });
-
+    
     config.lowerToolbar.forEach(function(mitem) {
-        $(".lower-toolbar").append(`<li class=${mitem.id}>
+        $(".lower-toolbar").append(`<li class=${mitem.id} data-toggle="tooltip" 
+                                                          data-placement="right" 
+                                                          title=${mitem.title}>
                                         <i class="material-icons">${mitem.icon}</i>
                                     </li>`);
         $(".lower-toolbar").on("click", `li.${mitem.id}` , function(event) {
@@ -33,5 +37,7 @@
             event.stopImmediatePropagation;
         });                            
     });
+
+    $('[data-toggle="tooltip"]').tooltip();
     
 })()

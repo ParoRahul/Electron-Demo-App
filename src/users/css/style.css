@@ -30,8 +30,11 @@ body {
     text-align: center;
 }
 
-.userimage{
-    padding :0 250px;
+#userimglabel{
+    display: block;
+    text-align: center;
+    color: #287bc9;
+    cursor: pointer;
 }
 
 .login{

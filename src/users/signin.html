@@ -16,14 +16,19 @@
     <br>
     <div class="main-container">    
         <h5>Signup</h5>
-        <br>
         <img class="rounded mx-auto d-block"  src="../asset/image/black_user.png" alt="user image">
+        <label class = "align-middle" for="userimg" id="userimglabel">Choose a profile picture</label>
+        <input type="file" id="userimg" name="avatar" accept="image/png,image/jpeg" style="display: none">
         <div class="form-group">
             <label for="userid">User Name</label>
             <input type="text" class="form-control" id="userid" placeholder="Enter User Name">
         </div>
         <div class="form-group">
             <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+            <label for="password">Confirm Password</label>
             <input type="password" class="form-control" id="password" placeholder="Enter Password">
         </div>
         <button class="btn btn-primary login" >Signup</button>

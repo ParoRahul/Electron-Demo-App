@@ -87,8 +87,8 @@
     },
     {
         "title": "Signin_User",
-        "width": 600,
-        "height": 400,
+        "width": 300,
+        "height": 450,
         "alwaysOnTop": true,
         "show": false,
         "modal": true,

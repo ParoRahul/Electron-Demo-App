@@ -24,9 +24,9 @@ class config {
         this.menuConfig = null;
         this.windowConfig = [];
         this.initWindowtitle = "Main_Window";
-        this.upperToolbar=  [  {icon:"account_circle", id:"manageUser"}];
-        this.lowerToolbar=  [  {icon:"settings_applications", id:"settings"},
-                               {icon:"lock_open", id:"appLock"}];
+        this.upperToolbar=  [  {icon:"account_circle", id:"manageUser",title:"Login/Signup"}];
+        this.lowerToolbar=  [  {icon:"settings_applications", id:"settings",title:"Settings"},
+                               {icon:"lock_open", id:"appLock",title:"Lock Application"}];
         this.loadMenuConfig();
         this.loadWindowConfig();
         this.dbCfg = {
