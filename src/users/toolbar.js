@@ -1,7 +1,13 @@
+const { ipcRenderer} = require('electron');
 (function(){
     $(".upper-toolbar").on("toolaction", function(event,actiontype){        
-        if (actiontype=='manageAccount')
-            rendererObj.open('Manage_Account') 
+        if (actiontype=='manageAccount'){
+            let windowTitle ='Manage_User'
+            ipcRenderer.on("HAHA",(event,{id})=>{
+                console.log('displaying Manage_Account');
+            });
+            ipcRenderer.send("window.open",{windowTitle})
+        }
     });
 
     $(".lower-toolbar").on("toolaction", function(event,actiontype){

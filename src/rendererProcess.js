@@ -22,24 +22,22 @@ rendererObj = {
 
     time: new Date().getTime(),
 
-    body: $(document.body),
-
     _init: function() {
         this.baseUrl = window.location.href;
-        /* var matches =/[\/\\]([^\/\\]+)[\/\\]([^\/\\?]+)(\?[^\/\\]+)?$/.exec(window.location);
-        if(matches){
-            this.controller = matches[1];
-            this.action = matches[2];
-        }
-        console.log(`base URL ${this.baseUrl} controller ${this.controller}  window ${window.location.href} `); */
+        this.title = document.title;
+        this.id=currentWin.id;
     },
 
     is: function(pageId) {
-        return this.body.attr("id") === pageId;
+        return $(document.body).attr("id") === pageId;
     },
 
     close: function(id) {
-        ipcRenderer.send("window.close", id)
+        if (id)
+            ipcRenderer.send("window.close", id)
+        else
+            //ipcRenderer.send("window.close", this.id)
+            currentWin.close()
     },
 
     open: function(windowTitle) {
@@ -79,11 +77,18 @@ rendererObj = {
     },
 
     hide: function(id) {
-        ipcRenderer.send("window.hide", id)
+        if (id )
+            ipcRenderer.send("window.hide", id)
+        else
+            //ipcRenderer.send("window.close", this.id)
+            currentWin.hide()
     },
 
     show: function(features) {
-        ipcRenderer.send("window.show", { features: features })
+        if (id )
+            ipcRenderer.send("window.show", id)
+        else
+            currentWin.show()
     },
 
     dialogshow_depricated: function(windowTitle, features, requestId, eventName) {
@@ -120,15 +125,7 @@ rendererObj = {
             });
         }
     },
-
-    on: function(eventName, callback) {
-        if (typeof callback == "function") {
-            ipcRenderer.on("window.addEventListener." + eventName, (event, args) => {
-                callback(args)
-            });
-        }
-    },
-
+    
     openExternal: function(url) {
         return shell.openExternal(url);
     }

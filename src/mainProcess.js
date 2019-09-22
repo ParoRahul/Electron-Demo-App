@@ -139,10 +139,9 @@ class mainProcess {
         app.on('ready', () => {
             let initWinTitle = configs.initWindowtitle;
             console.log(`initWinTitle : ${initWinTitle}`);
-            this.createWindow(initWinTitle).then((window)=>{
+            this.createWindow(initWinTitle)
+            .then((window)=>{
                 this.loadPage(window);
-            //}).then(()=>{    
-            //    this.windowList.push({'title':initWinTitle,'id':window.id});
             }).catch((err)=>{
                console.log(err);
             })
@@ -154,8 +153,11 @@ class mainProcess {
                 currentWindow.show();
             }
             else{
-                this.createWindow(windowTitle).then((window)=>{
-                    this.loadPage(window)
+                this.createWindow(windowTitle)
+                .then((window)=>{
+                    this.loadPage(window);
+                    event.reply("HAHA",{id:window.id});
+                    console.log("window.created."+windowTitle)
                 }).catch((err)=>{
                     console.log(err)
                 });                 

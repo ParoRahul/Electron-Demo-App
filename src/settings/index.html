@@ -11,12 +11,49 @@
     <title></title>
 </head>
 
-<body id="appSettings">
-    <i class="material-icons btn-exit">close</i>
+<body id="Settings">
+    <i class="material-icons btn-exit">close</i>    
     <div class="main-container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#appSettings">App Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#dbSettings">DB Settings</a>
+            </li>
+        </ul>                
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane container active" id="appSettings">
+                <div class="form-group">
+                    <label for="tsettings">Theme</label>
+                    <select class="form-control input-sm col-sm-2" id="tsettings">
+                        <option>Dark</option>
+                        <option>Light</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lsettings">Language</label>
+                    <select class="form-control input-sm col-sm-2" id="lsettings">
+                        <option>English</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hsettings">Home Screen</label>
+                    <select class="form-control input-sm col-sm-4" id="hsettings">
+                        <option>Dash board</option>
+                        <option>Default</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tab-pane container fade" id="dbSettings">
+                 <p>this is DB SEttings</p>
+            </div>
+        </div>
         <button class="btn btn-primary" type="submit">Save</button>
     </div>
     <script> window.$ = window.jQuery = require("jquery"); </script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script type='text/javascript' src='../rendererProcess.js'></script>
 </body>
 

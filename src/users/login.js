@@ -5,6 +5,9 @@
     let username = $('#userid').val();
     let password = $('#password').val();
     $('#signup').on('click',function(){
-        rendererObj.open('Signin_User')
+        rendererObj.on('window.addEventListener.Signin_User',()=>{
+            rendererObj.close()
+        });
+        rendererObj.open('Signin_User');
     })
 })()
