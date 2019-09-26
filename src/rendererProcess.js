@@ -4,7 +4,7 @@
  * author: 683898
  * Description: Common Rendrer Process for All window 
  */
-
+'use strict';
 const { ipcRenderer, remote, shell } = require('electron');
 let currentWin = remote.getCurrentWindow();
 

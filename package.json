@@ -20,12 +20,14 @@
   },
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "bootstrap-material-design": "^4.1.2",
     "custom-electron-titlebar": "^3.1.0",
     "electron": "^6.0.7",
     "handlebars": "^4.1.2",
     "jquery": "^3.4.1",
     "material-design-icons-iconfont": "^5.0.1",
     "mustache": "^3.0.1",
+    "popper.js": "^1.14.7",
     "pouchdb": "^7.1.1"
   }
 }

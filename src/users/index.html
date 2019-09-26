@@ -14,29 +14,30 @@
 <body id="appUserPage">
     <i class="material-icons btn-exit">close</i>
     <br>
-    <div class="main-container">    
+    <form class="needs-validation" id="login-form" novalidate>    
         <h5>Login</h5>
         <h5>or</h5>
         <h5>Go Annonymous</h5>
         <br><br>
-        <!-- <img class="rounded mx-auto d-block"  src="../asset/image/black_user.png" alt="user image"> -->
         <div class="form-group">
             <label for="userid">User Name</label>
-            <input type="text" class="form-control" id="userid" placeholder="Enter User Name">
+            <input type="text" class="form-control" id="userid" placeholder="Enter User Name" required>
+            <div class="invalid-feedback">Username can not be left blank</div>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter Password">
+            <input type="password" class="form-control" id="password" placeholder="Enter Password" required>
+            <div class="invalid-feedback">Password can not be left blank</div>
         </div>
         <br>
-        <button class="btn btn-primary login" type="submit">Login</button>
-        <br><br>
-        <span id="signup">Create Acoount</span>
-        <span id="annonymous">Go Annonymous</span>
-    </div>
+        <button class="btn btn-primary btn-sm" id="login" type="submit" >Login</button>
+    </form>
+    <br><br>
+    <span id="signup">Create Acoount</span>
+    <span id="annonymous">Go Annonymous</span>
     <script> window.$ = window.jQuery = require("jquery"); </script>
+    <script type='text/javascript' src='../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'></script>
     <script type='text/javascript' src='../rendererProcess.js'></script>
     <script type='text/javascript' src='./login.js'></script>
 </body>
-
 </html>

@@ -3,11 +3,13 @@ const DbService = require('./db.service.js');
 
 class UserService extends dbservice{
     constructor(dbName ,dbPath){
+        if(!!UserService.instance){
+             return UserService.instance;
+        }
         super(dbName ,dbPath)
+        UserService.instance=this
+        return this;
     }
 }
 
-const userService = new UserService();
-Object.freeze(userService);
-
-export default userService;
+module.exports = UserService;

@@ -1,8 +1,12 @@
 (function(){
     $(".upper-toolbar").on("toolaction", function(event,actiontype){        
-        if (actiontype=='manageUser')
-            rendererObj.open('Manage_User')
-            //console.log(` Action triggered ${actiontype}`) 
+        if (actiontype=='manageUser'){
+            let windowTitle ='Manage_User'
+            ipcRenderer.on("HAHA",(event,{id})=>{
+                console.log('displaying Manage_Account');
+            });
+            ipcRenderer.send("window.open",{windowTitle})
+        }
     });
 
     $(".lower-toolbar").on("toolaction", function(event,actiontype){
