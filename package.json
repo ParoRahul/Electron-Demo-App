@@ -23,7 +23,7 @@
     "bootstrap-material-design": "^4.1.2",
     "custom-electron-titlebar": "^3.1.0",
     "electron": "^6.0.7",
-    "handlebars": "^4.1.2",
+    "handlebars": "^4.5.3",
     "jquery": "^3.4.1",
     "material-design-icons-iconfont": "^5.0.1",
     "mustache": "^3.0.1",
