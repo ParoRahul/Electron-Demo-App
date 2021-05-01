@@ -1,4 +1,4 @@
-# Groot
+
 Basic Electron building blocks to start any electron project   :grimacing:
 ![Application Demo](src/asset/app_dmo.gif)
 
